@@ -10,24 +10,22 @@ export default function HomePage() {
           <div className="lg:grid lg:grid-cols-12 lg:gap-8">
             <div className="sm:text-center md:max-w-2xl md:mx-auto lg:col-span-6 lg:text-left">
               <h1 className="text-4xl font-bold text-foreground tracking-tight sm:text-5xl md:text-6xl">
-                Build Your SaaS
-                <span className="block text-orange-500">Faster Than Ever</span>
+                Stop Job-Hunting Burnout.
+                <span className="block text-indigo-500">
+                  Start Getting Interviews.
+                </span>
               </h1>
               <p className="mt-3 text-base text-muted-foreground sm:mt-5 sm:text-xl lg:text-lg xl:text-xl">
-                Launch your SaaS product in record time with our powerful,
-                ready-to-use template. Packed with modern technologies and
-                essential integrations.
+                ResumeNow: Your personal job search ally that does the heavy
+                lifting so you can focus on what matters—landing your next role.
               </p>
-              <div className="mt-8 sm:max-w-lg sm:mx-auto sm:text-center lg:text-left lg:mx-0">
-                <a
-                  href="https://vercel.com/templates/next.js/next-js-saas-starter"
-                  target="_blank"
-                >
+              <div className="mt-8 sm:max-w-lg sm:mx-auto sm:text-center lg:text-left lg:mx-0 flex items-center gap-4">
+                <a href="/sign-up">
                   <Button
                     variant={"default"}
                     className="inline-flex items-center justify-center"
                   >
-                    Deploy your own
+                    Create Your Account
                     <ArrowRight className="ml-2 h-5 w-5" />
                   </Button>
                 </a>
@@ -54,11 +52,13 @@ export default function HomePage() {
               </div>
               <div className="mt-5">
                 <h2 className="text-lg font-medium text-foreground">
-                  Next.js and React
+                  Smart Resume Tailoring
                 </h2>
                 <p className="mt-2 text-base text-muted-foreground">
-                  Leverage the power of modern web technologies for optimal
-                  performance and developer experience.
+                  Upload your master resume once. Our system analyzes job
+                  descriptions and automatically customizes your resume to
+                  highlight relevant skills and experience—making you the
+                  perfect match every time.
                 </p>
               </div>
             </div>
@@ -69,11 +69,13 @@ export default function HomePage() {
               </div>
               <div className="mt-5">
                 <h2 className="text-lg font-medium text-foreground">
-                  Postgres and Drizzle ORM
+                  Apply While You Sleep
                 </h2>
                 <p className="mt-2 text-base text-muted-foreground">
-                  Robust database solution with an intuitive ORM for efficient
-                  data management and scalability.
+                  Set your job preferences and let ResumeNow handle the rest. We
+                  search openings across platforms, submit applications, and
+                  track everything in one dashboard. Wake up to application
+                  confirmations, not application anxiety.
                 </p>
               </div>
             </div>
@@ -84,11 +86,12 @@ export default function HomePage() {
               </div>
               <div className="mt-5">
                 <h2 className="text-lg font-medium text-foreground">
-                  Stripe Integration
+                  Interview Confidence Builder
                 </h2>
                 <p className="mt-2 text-base text-muted-foreground">
-                  Seamless payment processing and subscription management with
-                  industry-leading Stripe integration.
+                  When interviews roll in (and they will), ResumeNow preps you
+                  with company insights, potential questions, and tailored
+                  talking points based on your experience and the role.
                 </p>
               </div>
             </div>
@@ -101,18 +104,16 @@ export default function HomePage() {
           <div className="lg:grid lg:grid-cols-2 lg:gap-8 lg:items-start">
             <div>
               <h2 className="text-3xl font-bold text-foreground sm:text-4xl">
-                Ready to launch your SaaS?
+                Your Next Role Is Waiting
               </h2>
               <p className="mt-3 max-w-3xl text-lg text-muted-foreground">
-                Our template provides everything you need to get your SaaS up
-                and running quickly. Don't waste time on boilerplate - focus on
-                what makes your product unique.
+                The job market is tough—your job search toolkit shouldn't be.
               </p>
             </div>
             <div className="mt-8 lg:mt-0 flex justify-center lg:justify-end">
-              <a href="https://github.com/nextjs/saas-starter" target="_blank">
+              <a href="/pricing">
                 <Button variant={"default"} size={"lg"}>
-                  View the code
+                  View Plans
                   <ArrowRight className="ml-3 h-6 w-6" />
                 </Button>
               </a>

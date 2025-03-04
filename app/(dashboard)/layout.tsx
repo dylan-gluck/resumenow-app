@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { use, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { CircleIcon, Home, LogOut } from "lucide-react";
+import { Home, LogOut, FilePlus } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -29,10 +29,10 @@ function Header() {
   }
 
   return (
-    <header className="bg-background border-b border-border">
+    <header className="bg-background/50 backdrop-blur-md border-b border-border sticky top-0">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
         <Link href="/" className="flex items-center">
-          <CircleIcon className="h-6 w-6 text-indigo-500" />
+          <FilePlus className="h-6 w-6 text-indigo-500" />
           <span className="ml-2 text-xl font-semibold text-foreground">
             ResumeNow
           </span>
