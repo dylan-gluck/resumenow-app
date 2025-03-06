@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 import { getUser } from "@/lib/db/queries";
-import { FileUpload } from "./file-upload";
+import { ResumeUpload } from "./resume-upload";
 
 export default async function SettingsPage() {
   const user = await getUser();
@@ -10,14 +10,12 @@ export default async function SettingsPage() {
   }
 
   return (
-    <main>
-      <article className="dashboard max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col">
-        <h1>Dashboard</h1>
-        <p>Welcome to your dashboard!</p>
-        <div className="py-10 flex flex-col space-y-4">
-          <FileUpload />
-        </div>
-      </article>
+    <main className="px-4 sm:px-6 lg:px-8 py-4 flex flex-col flex-1">
+      <h1 className="text-3xl font-bold my-2">Onboarding</h1>
+      <p>Upload your resume, and we'll get started.</p>
+      <div className="py-10 flex flex-col flex-1">
+        <ResumeUpload />
+      </div>
     </main>
   );
 }
