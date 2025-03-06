@@ -60,7 +60,7 @@ export default function SecurityPage() {
         </CardHeader>
         <CardContent>
           <form className="space-y-4" onSubmit={handlePasswordSubmit}>
-            <div>
+            <div className="space-y-2">
               <Label htmlFor="current-password">Current Password</Label>
               <Input
                 id="current-password"
@@ -72,7 +72,7 @@ export default function SecurityPage() {
                 maxLength={100}
               />
             </div>
-            <div>
+            <div className="space-y-2">
               <Label htmlFor="new-password">New Password</Label>
               <Input
                 id="new-password"
@@ -84,7 +84,7 @@ export default function SecurityPage() {
                 maxLength={100}
               />
             </div>
-            <div>
+            <div className="space-y-2">
               <Label htmlFor="confirm-password">Confirm New Password</Label>
               <Input
                 id="confirm-password"
@@ -131,7 +131,7 @@ export default function SecurityPage() {
             Account deletion is non-reversable. Please proceed with caution.
           </p>
           <form onSubmit={handleDeleteSubmit} className="space-y-4">
-            <div>
+            <div className="space-y-2">
               <Label htmlFor="delete-password">Confirm Password</Label>
               <Input
                 id="delete-password"

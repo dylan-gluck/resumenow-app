@@ -58,7 +58,7 @@ export default function GeneralPage() {
                 required
               />
             </div>
-            <div className="space-y-4">
+            <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
               <Input
                 id="email"

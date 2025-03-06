@@ -11,7 +11,7 @@ export default function HomePage() {
             <div className="sm:text-center md:max-w-2xl md:mx-auto lg:max-w-[1600px] lg:col-span-6 lg:text-left">
               <h1 className="text-4xl font-bold text-foreground tracking-tight sm:text-5xl md:text-6xl">
                 Stop Job-Hunting Burnout.
-                <span className="block text-indigo-500">
+                <span className="block text-primary">
                   Start Getting Interviews.
                 </span>
               </h1>

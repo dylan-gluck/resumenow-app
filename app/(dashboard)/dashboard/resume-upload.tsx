@@ -113,28 +113,16 @@ export function ResumeUpload() {
           className={`
             border-2 border-dashed rounded-md p-6 grid place-items-center cursor-pointer transition-colors flex-1
             ${isDragActive ? "border-indigo-500 bg-indigo-500/10 text-indigo-500" : "border-border hover:border-indigo-500 hover:bg-indigo-500/10 hover:text-indigo-500"}
-            ${fileName ? "pointer-events-none border-indigo-500/50 bg-indigo-500/10" : ""}
           `}
         >
-          {fileName ? (
-            <div className="flex flex-col items-center">
-              <p className="text-lg font-medium">
-                {processing
-                  ? "Processing... this could take a few seconds"
-                  : "Extracted resume info below"}
-              </p>
-              <p className="text-xs text-muted-foreground mt-1">{fileName}</p>
-            </div>
-          ) : (
-            <div className="flex flex-col items-center">
-              <p className="font-medium text-lg">
-                Drag and drop your resume here
-              </p>
-              <p className="text-xs text-muted-foreground mt-1">
-                {acceptedFileTypes}
-              </p>
-            </div>
-          )}
+          <div className="flex flex-col items-center">
+            <p className="font-medium text-lg">
+              Drag and drop your resume here
+            </p>
+            <p className="text-xs text-muted-foreground mt-1">
+              {acceptedFileTypes}
+            </p>
+          </div>
         </div>
       </div>
       {resume && (
