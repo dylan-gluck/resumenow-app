@@ -110,8 +110,11 @@ export function ResumeUpload() {
           onDragOver={onDragOver}
           onDragLeave={onDragLeave}
           onDrop={onDrop}
-          className={`border-2 border-dashed rounded-md p-6 grid place-items-center cursor-pointer transition-colors flex-1
-            ${isDragActive ? "border-indigo-500 bg-indigo-500/10 text-indigo-500" : "border-border hover:border-indigo-500 hover:bg-indigo-500/10 hover:text-indigo-500"} ${fileName ? "pointer-events-none border-indigo-500/50 text-indigo-500/60" : ""}`}
+          className={`
+            border-2 border-dashed rounded-md p-6 grid place-items-center cursor-pointer transition-colors flex-1
+            ${isDragActive ? "border-indigo-500 bg-indigo-500/10 text-indigo-500" : "border-border hover:border-indigo-500 hover:bg-indigo-500/10 hover:text-indigo-500"}
+            ${fileName ? "pointer-events-none border-indigo-500/50 bg-indigo-500/10" : ""}
+          `}
         >
           {fileName ? (
             <div className="flex flex-col items-center">

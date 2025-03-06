@@ -29,8 +29,8 @@ function Header() {
   }
 
   return (
-    <header className="bg-background/50 backdrop-blur-md border-b border-border sticky top-0">
-      <div className="px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+    <header className="bg-background/50 backdrop-blur-md border-b border-border sticky top-0 z-20">
+      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
         <Link href="/" className="flex items-center">
           <FilePlus className="h-6 w-6 text-indigo-500" />
           <span className="ml-2 text-xl font-semibold text-foreground">

@@ -10,11 +10,13 @@ export default async function SettingsPage() {
   }
 
   return (
-    <main className="px-4 sm:px-6 lg:px-8 py-4 flex flex-col flex-1">
-      <h1 className="text-3xl font-bold my-2">Onboarding</h1>
-      <p>Upload your resume, and we'll get started.</p>
-      <div className="py-10 flex flex-col flex-1">
-        <ResumeUpload />
+    <main className="w-full max-w-[1600px] px-4 sm:px-6 lg:px-8 py-4 flex flex-col flex-1 self-center">
+      <div className="flex flex-col flex-1">
+        <h1 className="text-3xl font-bold my-2">Onboarding</h1>
+        <p>Upload your resume, and we'll get started.</p>
+        <div className="py-10 flex flex-col flex-1">
+          <ResumeUpload />
+        </div>
       </div>
     </main>
   );

@@ -6,9 +6,9 @@ export default function HomePage() {
   return (
     <main>
       <section className="py-20">
-        <div className="mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="lg:grid lg:grid-cols-12 lg:gap-8">
-            <div className="sm:text-center md:max-w-2xl md:mx-auto lg:col-span-6 lg:text-left">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-8">
+          <div className="lg:grid lg:grid-cols-12 lg:gap-10">
+            <div className="sm:text-center md:max-w-2xl md:mx-auto lg:max-w-[1600px] lg:col-span-6 lg:text-left">
               <h1 className="text-4xl font-bold text-foreground tracking-tight sm:text-5xl md:text-6xl">
                 Stop Job-Hunting Burnout.
                 <span className="block text-indigo-500">
@@ -19,7 +19,7 @@ export default function HomePage() {
                 ResumeNow: Your personal job search ally that does the heavy
                 lifting so you can focus on what matters—landing your next role.
               </p>
-              <div className="mt-8 sm:max-w-lg sm:mx-auto sm:text-center lg:text-left lg:mx-0 flex items-center gap-4">
+              <div className="flex items-center gap-4 mt-8 sm:max-w-lg sm:mx-auto sm:text-center lg:max-w-3xl lg:text-left lg:mx-0 max-lg:justify-center">
                 <a href="/sign-up">
                   <Button
                     variant={"default"}
@@ -39,7 +39,7 @@ export default function HomePage() {
       </section>
 
       <section className="py-16 bg-background text-foreground w-full">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 lg:max-w-[1600px]">
           <div className="lg:grid lg:grid-cols-3 lg:gap-8">
             <div>
               <div className="flex items-center justify-center h-12 w-12 rounded-md bg-accent text-accent-foreground">
@@ -100,13 +100,13 @@ export default function HomePage() {
       </section>
 
       <section className="py-16 bg-background">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="lg:grid lg:grid-cols-2 lg:gap-8 lg:items-start">
+        <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 lg:max-w-[1600px]">
+          <div className="lg:grid lg:grid-cols-2 lg:gap-8 lg:items-center">
             <div>
-              <h2 className="text-3xl font-bold text-foreground sm:text-4xl">
+              <h2 className="text-3xl font-bold text-foreground sm:text-4xl max-lg:text-center">
                 Your Next Role Is Waiting
               </h2>
-              <p className="mt-3 max-w-3xl text-lg text-muted-foreground">
+              <p className="mt-3 max-w-3xl text-lg text-muted-foreground max-lg:text-center">
                 The job market is tough—your job search toolkit shouldn't be.
               </p>
             </div>
