@@ -38,12 +38,37 @@ function Header() {
           </span>
         </Link>
         <div className="flex items-center space-x-4">
-          <Link
-            href="/pricing"
-            className="text-sm font-medium text-muted-foreground hover:text-foreground"
-          >
-            Pricing
-          </Link>
+          {!user ? (
+            <div className="flex items-center space-x-4">
+              <Link
+                href="/"
+                className="text-sm font-medium text-muted-foreground hover:text-foreground"
+              >
+                Home
+              </Link>
+              <Link
+                href="/pricing"
+                className="text-sm font-medium text-muted-foreground hover:text-foreground"
+              >
+                Pricing
+              </Link>
+            </div>
+          ) : (
+            <div className="flex items-center space-x-4">
+              <Link
+                href="/dashboard"
+                className="text-sm font-medium text-muted-foreground hover:text-foreground"
+              >
+                Dashboard
+              </Link>
+              <Link
+                href="/dashboard/settings"
+                className="text-sm font-medium text-muted-foreground hover:text-foreground"
+              >
+                Settings
+              </Link>
+            </div>
+          )}
           <ModeToggle />
           {user ? (
             <DropdownMenu open={isMenuOpen} onOpenChange={setIsMenuOpen}>
