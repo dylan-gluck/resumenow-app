@@ -1,7 +1,7 @@
 {
-	"name": "svelte-saas-starter",
+	"name": "resumenow-app",
 	"private": true,
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"type": "module",
 	"scripts": {
 		"dev": "vite dev",
@@ -33,6 +33,7 @@
 		"eslint-plugin-svelte": "^2.46.1",
 		"formsnap": "^2.0.1",
 		"globals": "^15.14.0",
+		"lucide-svelte": "^0.506.0",
 		"mode-watcher": "^1.0.2",
 		"paneforge": "1.0.0-next.5",
 		"prettier": "^3.4.2",

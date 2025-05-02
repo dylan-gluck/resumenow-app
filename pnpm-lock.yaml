@@ -72,6 +72,9 @@ importers:
       globals:
         specifier: ^15.14.0
         version: 15.15.0
+      lucide-svelte:
+        specifier: ^0.506.0
+        version: 0.506.0(svelte@5.28.2)
       mode-watcher:
         specifier: ^1.0.2
         version: 1.0.2(svelte@5.28.2)
@@ -1369,6 +1372,11 @@ packages:
 
   lru-cache@10.4.3:
     resolution: {integrity: sha512-JNAzZcXrCt42VGLuYz0zfAzDfAvJWW6AfYlDBQyDV5DClI2m5sAmK+OIO7s59XfsRsWHp02jAJrRadPRGTt6SQ==}
+
+  lucide-svelte@0.506.0:
+    resolution: {integrity: sha512-yRixfYYOo15ZqwQCnb2+VjGhd0DyjagdXfwBY3dLEGMOMIkfMXGoPCSAbL/dhM+NGSltfg6V+naiR8GZqfDqAQ==}
+    peerDependencies:
+      svelte: ^3 || ^4 || ^5.0.0-next.42
 
   magic-string@0.30.17:
     resolution: {integrity: sha512-sNPKHvyjVf7gyjwS4xGTaW/mCnF8wnjtifKBEhxfZ7E/S8tQ0rssrwGNn6q8JH/ohItJfSQp9mBtQYuTlH5QnA==}
@@ -3373,6 +3381,10 @@ snapshots:
   lodash.merge@4.6.2: {}
 
   lru-cache@10.4.3: {}
+
+  lucide-svelte@0.506.0(svelte@5.28.2):
+    dependencies:
+      svelte: 5.28.2
 
   magic-string@0.30.17:
     dependencies:
