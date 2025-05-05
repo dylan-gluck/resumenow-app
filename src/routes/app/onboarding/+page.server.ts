@@ -14,7 +14,7 @@ export const actions: Actions = {
 	default: async (event) => {
 		const form = await superValidate(event, zod(formSchema));
 
-		console.log(form);
+		console.log(JSON.stringify(form, null, 4));
 
 		if (!form.valid) {
 			return fail(400, {

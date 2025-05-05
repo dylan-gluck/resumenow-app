@@ -1,5 +1,5 @@
 export interface ContactInfo {
-	full_name: string;
+	full_name?: string;
 	email?: string;
 	phone?: string;
 	address?: string;
@@ -24,8 +24,8 @@ export interface WorkExperience {
 	position?: string;
 	start_date?: string;
 	end_date?: string;
-	is_current: boolean;
-	responsibilities: string[];
+	is_current?: boolean;
+	responsibilities?: string[];
 	technologies?: string[];
 }
 
@@ -36,8 +36,8 @@ export interface Skill {
 }
 
 export interface TechnicalSkills {
-	programming_languages: Skill[];
-	frameworks_libraries: Skill[];
+	programming_languages?: Skill[];
+	frameworks_libraries?: Skill[];
 	databases?: Skill[];
 	tools?: Skill[];
 	cloud_platforms?: Skill[];
@@ -72,11 +72,11 @@ export interface OpenSourceContribution {
 }
 
 export interface Resume {
-	contact_info: ContactInfo;
+	contact_info?: ContactInfo;
 	summary?: string;
-	education: Education[];
-	work_experience: WorkExperience[];
-	technical_skills: TechnicalSkills;
+	education?: Education[];
+	work_experience?: WorkExperience[];
+	technical_skills?: TechnicalSkills;
 	projects?: Project[];
 	open_source_contributions?: OpenSourceContribution[];
 	certifications?: Certification[];

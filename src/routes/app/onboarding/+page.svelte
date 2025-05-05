@@ -4,8 +4,16 @@
 	import LinkedinImport from './LinkedinImport.svelte';
 	import ResumeForm from './ResumeForm.svelte';
 	import type { PageData } from './$types';
+	import type { Resume } from '@/types/resume';
 
 	let { data }: { data: PageData } = $props();
+
+	let isImporting: boolean = $state(false);
+	let resumeImport: Resume = $state<Resume>({});
+
+	$effect(() => {
+		$inspect('Resume Imported (root): ', resumeImport);
+	});
 </script>
 
 <svelte:head>
@@ -22,7 +30,7 @@
 
 		<div class="mt-12 grid grid-cols-1 gap-12 md:grid-cols-2">
 			<div class="flex flex-col gap-4">
-				<ResumeUpload />
+				<ResumeUpload bind:resumeImport bind:isImporting />
 				<div class="my-4 flex items-center justify-center gap-4">
 					<Separator class="flex-1" />
 					<span class="flex-none text-xs text-muted-foreground">OR</span>
