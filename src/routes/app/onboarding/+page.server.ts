@@ -30,7 +30,7 @@ export const actions: Actions = {
 				console.error(error);
 			} else {
 				console.log('User profile updated successfully', data);
-				return redirect(302, '/app/dashboard');
+				return redirect(302, '/app/resume');
 			}
 		}
 

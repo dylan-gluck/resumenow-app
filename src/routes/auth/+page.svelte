@@ -3,6 +3,7 @@
 	import { Button } from '@/components/ui/button';
 	import { Label } from '@/components/ui/label';
 	import { Input } from '@/components/ui/input';
+	import Logo from '@/components/logo/Logo.svelte';
 </script>
 
 <svelte:head>
@@ -11,7 +12,9 @@
 
 <div class="py-24 sm:py-32">
 	<form method="POST" action="?/login" class="container max-w-lg">
-		<a href="/"><h1 class="mb-10 text-center text-3xl font-bold">abc.</h1></a>
+		<div class="mb-10 flex justify-center">
+			<Logo />
+		</div>
 		<Card.Root>
 			<Card.Header>
 				<Card.Title class="text-2xl">Login</Card.Title>

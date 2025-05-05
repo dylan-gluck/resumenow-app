@@ -2,6 +2,7 @@
 	import { Button } from '@/components/ui/button';
 	import { goto } from '$app/navigation';
 	import { page } from '$app/state';
+	import Logo from '@/components/logo/Logo.svelte';
 
 	let { supabase } = $derived(page.data);
 
@@ -14,10 +15,10 @@
 	};
 </script>
 
-<header class="border-b border-border py-6">
+<header class="py-6">
 	<div class="container flex items-center justify-between gap-4">
+		<Logo />
 		<div class="flex items-center gap-4">
-			<a href="/"><h1 class="mr-10 text-2xl font-bold leading-none">ResumeNow</h1></a>
 			<a href="/app/dashboard" class="text-sm leading-none">Dashboard</a>
 			<a href="/app/resume" class="text-sm leading-none">Base Resume</a>
 			<a href="/app/settings" class="text-sm leading-none">Settings</a>
