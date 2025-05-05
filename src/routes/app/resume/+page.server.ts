@@ -4,9 +4,17 @@ import { superValidate } from 'sveltekit-superforms';
 import { formSchema } from '@/components/resume-form/schema';
 import { zod } from 'sveltekit-superforms/adapters';
 
-export const load: PageServerLoad = async () => {
+export const load: PageServerLoad = async ({ locals: { user, supabase } }) => {
+	const { data: profile, error: profileError } = await supabase
+		.from('profiles')
+		.select('*')
+		.eq('user_id', user.id)
+		.single();
+
+	const resume = profile.resume || {};
+
 	return {
-		form: await superValidate(zod(formSchema))
+		form: await superValidate(resume, zod(formSchema))
 	};
 };
 
@@ -23,14 +31,14 @@ export const actions: Actions = {
 		} else {
 			const { data, error } = await supabase
 				.from('profiles')
-				.upsert([{ user_id: user.id, resume: form.data }])
+				.update({ resume: form.data, updated_at: new Date() })
+				.eq('user_id', user.id)
 				.select();
 
 			if (error) {
 				console.error(error);
 			} else {
 				console.log('User profile updated successfully', data);
-				return redirect(302, '/app/dashboard');
 			}
 		}
 

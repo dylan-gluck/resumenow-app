@@ -32,10 +32,18 @@
 		isImporting: boolean;
 	} = $props();
 
+	let isSaving = false;
+
 	const form = superForm(data.form, {
 		validators: zodClient(formSchema),
 		dataType: 'json',
-		resetForm: false
+		resetForm: false,
+		onSubmit: () => {
+			isSaving = true;
+		},
+		onUpdated: () => {
+			isSaving = false;
+		}
 	});
 
 	const { form: formData, errors: formErrors, enhance } = form;
@@ -1483,10 +1491,10 @@
 	</Accordion.Root>
 
 	<div class="mt-10 flex justify-end gap-2 border-t border-border py-4">
-		<Form.Button
-			onclick={() => {
-				console.log('Save Resume');
-			}}>Save Resume</Form.Button
-		>
+		{#if isSaving}
+			<Button variant="outline" disabled><Loader class="animate-spin" /> Saving...</Button>
+		{:else}
+			<Form.Button>Save Resume</Form.Button>
+		{/if}
 	</div>
 </form>

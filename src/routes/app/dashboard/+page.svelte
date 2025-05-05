@@ -1,3 +1,7 @@
+<script lang="ts">
+	let { data } = $props();
+</script>
+
 <svelte:head>
 	<title>Dashboard | Svelte Saas Starter</title>
 </svelte:head>

@@ -2,7 +2,7 @@
 	import { Separator } from '@/components/ui/separator';
 	import ResumeUpload from './ResumeUpload.svelte';
 	import LinkedinImport from './LinkedinImport.svelte';
-	import ResumeForm from './ResumeForm.svelte';
+	import ResumeForm from '@/components/resume-form/ResumeForm.svelte';
 	import type { PageData } from './$types';
 	import type { Resume } from '@/types/resume';
 
