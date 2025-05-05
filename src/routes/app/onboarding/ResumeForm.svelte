@@ -38,10 +38,45 @@
 		resetForm: false
 	});
 
-	const { form: formData, enhance } = form;
+	const { form: formData, errors: formErrors, enhance } = form;
+
+	// Initialize default values for contact_info immediately to prevent race condition
+	if (!$formData.contact_info) {
+		$formData.contact_info = {
+			full_name: '',
+			email: '',
+			phone: '',
+			address: '',
+			linkedin: '',
+			github: '',
+			portfolio: '',
+			google_scholar: ''
+		};
+	}
+
+	// Initialize technical_skills immediately
+	if (!$formData.technical_skills) {
+		$formData.technical_skills = {
+			programming_languages: [],
+			frameworks_libraries: [],
+			databases: [],
+			tools: [],
+			cloud_platforms: [],
+			other: []
+		};
+	}
+
+	// Initialize critical arrays immediately
+	if (!$formData.education) $formData.education = [];
+	if (!$formData.work_experience) $formData.work_experience = [];
 
 	$effect(() => {
 		// If resumeImport changes and is not empty, update $formData with data from resumeImport
+		if (resumeImport && Object.keys(resumeImport).length > 0) {
+			console.log('Updating form data with resumeImport:', resumeImport);
+
+			$formData = resumeImport;
+		}
 	});
 
 	// Initialize default objects for each section
@@ -157,57 +192,6 @@
 		return [...array, plainCopy];
 	}
 
-	// Initialize arrays if they don't exist
-	$effect(() => {
-		if (!$formData.projects) {
-			$formData.projects = [];
-		}
-		if (!$formData.open_source_contributions) {
-			$formData.open_source_contributions = [];
-		}
-		if (!$formData.certifications) {
-			$formData.certifications = [];
-		}
-		if (!$formData.publications) {
-			$formData.publications = [];
-		}
-		if (!$formData.conferences) {
-			$formData.conferences = [];
-		}
-		if (!$formData.languages) {
-			$formData.languages = [];
-		}
-		if (!$formData.volunteer_work) {
-			$formData.volunteer_work = [];
-		}
-		if (!$formData.interests) {
-			$formData.interests = [];
-		}
-		if (!$formData.references) {
-			$formData.references = [];
-		}
-
-		// Initialize technical skills categories
-		if (!$formData.technical_skills.programming_languages) {
-			$formData.technical_skills.programming_languages = [];
-		}
-		if (!$formData.technical_skills.frameworks_libraries) {
-			$formData.technical_skills.frameworks_libraries = [];
-		}
-		if (!$formData.technical_skills.databases) {
-			$formData.technical_skills.databases = [];
-		}
-		if (!$formData.technical_skills.tools) {
-			$formData.technical_skills.tools = [];
-		}
-		if (!$formData.technical_skills.cloud_platforms) {
-			$formData.technical_skills.cloud_platforms = [];
-		}
-		if (!$formData.technical_skills.other) {
-			$formData.technical_skills.other = [];
-		}
-	});
-
 	// Function to add skill to the appropriate category
 	function addSkill() {
 		const category = selectedSkill.category;
@@ -285,7 +269,7 @@
 	let newReferenceText = '';
 </script>
 
-<form method="post" class="relative flex flex-col gap-4 px-2" use:enhance>
+<form method="POST" class="relative flex flex-col gap-4 px-2" use:enhance>
 	{#if isImporting}
 		<div
 			class="absolute inset-0 z-10 m-auto flex cursor-wait flex-col items-center justify-center gap-3 bg-background/50 backdrop-blur-sm"
@@ -1499,6 +1483,10 @@
 	</Accordion.Root>
 
 	<div class="mt-10 flex justify-end gap-2 border-t border-border py-4">
-		<Form.Button>Save Resume</Form.Button>
+		<Form.Button
+			onclick={() => {
+				console.log('Save Resume');
+			}}>Save Resume</Form.Button
+		>
 	</div>
 </form>

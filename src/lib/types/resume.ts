@@ -30,7 +30,7 @@ export interface WorkExperience {
 }
 
 export interface Skill {
-	name: string;
+	name?: string;
 	level?: string;
 	years_of_experience?: number;
 }
@@ -45,7 +45,7 @@ export interface TechnicalSkills {
 }
 
 export interface Project {
-	name: string;
+	name?: string;
 	description?: string;
 	technologies?: string[];
 	url?: string;
@@ -57,17 +57,17 @@ export interface Project {
 }
 
 export interface Certification {
-	name: string;
-	issuer: string;
+	name?: string;
+	issuer?: string;
 	date_obtained?: string;
 	expiration_date?: string;
 	credential_id?: string;
 }
 
 export interface OpenSourceContribution {
-	project_name: string;
-	contribution_type: string;
-	description: string;
+	project_name?: string;
+	contribution_type?: string;
+	description?: string;
 	url?: string;
 }
 

@@ -10,11 +10,8 @@ export const load: PageServerLoad = async ({ locals: { supabase, user } }) => {
 			.single();
 
 		if (error) {
-			console.error(error);
 			// No profile, redirect to onboarding
 			redirect(303, '/app/onboarding');
-		} else {
-			console.log(profile);
 		}
 
 		redirect(303, '/app/dashboard');

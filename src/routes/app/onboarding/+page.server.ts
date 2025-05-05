@@ -12,6 +12,8 @@ export const load: PageServerLoad = async () => {
 
 export const actions: Actions = {
 	default: async (event) => {
+		const user = event.locals.user;
+		const supabase = event.locals.supabase;
 		const form = await superValidate(event, zod(formSchema));
 
 		console.log(JSON.stringify(form, null, 4));
@@ -20,7 +22,19 @@ export const actions: Actions = {
 			return fail(400, {
 				form
 			});
+		} else {
+			const { data, error } = await supabase
+				.from('profiles')
+				.upsert([{ user_id: user.id, resume: form.data }])
+				.select();
+
+			if (error) {
+				console.error(error);
+			} else {
+				console.log('User profile updated successfully', data);
+			}
 		}
+
 		return {
 			form
 		};

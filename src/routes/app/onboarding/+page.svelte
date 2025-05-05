@@ -10,10 +10,6 @@
 
 	let isImporting: boolean = $state(false);
 	let resumeImport: Resume = $state<Resume>({});
-
-	$effect(() => {
-		$inspect('Resume Imported (root): ', resumeImport);
-	});
 </script>
 
 <svelte:head>
@@ -38,7 +34,7 @@
 				</div>
 				<LinkedinImport />
 			</div>
-			<ResumeForm {data} />
+			<ResumeForm {data} {resumeImport} {isImporting} />
 		</div>
 	</div>
 </div>
