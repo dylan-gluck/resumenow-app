@@ -21,9 +21,13 @@
 			<Logo />
 		</div>
 		<div class="navbar-center gap-6">
-			<a href="/app/apply" class="text-sm leading-none">Apply</a>
-			<a href="##" class="text-sm leading-none">Positions</a>
-			<a href="/app/resume" class="text-sm leading-none">Resume</a>
+			<a href="/app/apply" class="navbar-link" class:active={page.url.pathname === '/app/apply'}
+				>Apply</a
+			>
+			<a href="##" class="navbar-link">Positions</a>
+			<a href="/app/resume" class="navbar-link" class:active={page.url.pathname === '/app/resume'}
+				>Resume</a
+			>
 		</div>
 		<div class="navbar-end gap-4">
 			<Button size="sm" variant="outline" onclick={logout}>Logout</Button>
