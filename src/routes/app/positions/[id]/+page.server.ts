@@ -5,7 +5,7 @@ export const load: PageServerLoad = async ({ locals: { supabase }, params }) => 
 	const { id } = params;
 
 	let { data: position, error: positionError } = await supabase
-		.from('resumes')
+		.from('positions')
 		.select('*')
 		.eq('id', id)
 		.single();

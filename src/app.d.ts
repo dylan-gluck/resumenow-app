@@ -13,8 +13,8 @@ declare global {
 		interface PageData {
 			session: Session | null;
 			profile?: Database['public']['Tables']['profiles']['Row'] | null;
-			position?: Database['public']['Tables']['resumes']['Row'] | null;
-			positions?: Database['public']['Tables']['resumes']['Row'][] | null;
+			position?: Database['public']['Tables']['positions']['Row'] | null;
+			positions?: Database['public']['Tables']['positions']['Row'][] | null;
 		}
 		// interface PageState {}
 		// interface Platform {}

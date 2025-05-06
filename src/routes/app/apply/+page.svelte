@@ -46,7 +46,7 @@
 		}
 
 		const { data: position } = await supabase
-			.from('resumes')
+			.from('positions')
 			.select()
 			.eq('user_id', user.id)
 			.eq('job_url', url)
@@ -94,7 +94,7 @@
 		if (!jobData) return;
 
 		const { data, error } = await supabase
-			.from('resumes')
+			.from('positions')
 			.insert([
 				{
 					user_id: user.id,

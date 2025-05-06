@@ -54,8 +54,6 @@ export const actions: Actions = {
 
 		if (error) {
 			console.error(error);
-		} else {
-			console.log('User profile updated successfully', data);
 		}
 
 		return {

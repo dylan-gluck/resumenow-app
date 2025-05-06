@@ -1,8 +1,8 @@
 <script lang="ts">
 	import * as Table from '$lib/components/ui/table/index.js';
 	import { Button } from '@/components/ui/button';
-	import type { PageData } from './$types';
 	import { ArrowRight } from '@lucide/svelte';
+	import type { PageData } from './$types';
 	import { goto } from '$app/navigation';
 
 	let { data }: { data: PageData } = $props();

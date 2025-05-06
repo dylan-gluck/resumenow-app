@@ -17,13 +17,7 @@ export const load: PageServerLoad = async ({ locals: { supabase, user } }) => {
 		redirect(303, '/app/onboarding');
 	}
 
-	let { data: resumes, error: resumesError } = await supabase
-		.from('resumes')
-		.select('*')
-		.eq('user_id', user.id);
-
 	return {
-		profile,
-		resumes
+		profile
 	};
 };
