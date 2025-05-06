@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { Button } from '@/components/ui/button/index.js';
 	import { Input } from '@/components/ui/input';
+	import { Loader } from '@lucide/svelte';
 	import type { Job } from '@/types/job';
-	import { CircleDollarSign, Loader, MapPin } from '@lucide/svelte';
+	import { PUBLIC_API_URL } from '$env/static/public';
 
 	let { data } = $props();
 
@@ -62,7 +62,7 @@
 			formData.append('url', url);
 
 			try {
-				const response = await fetch('http://127.0.0.1:8000/job', {
+				const response = await fetch(`${PUBLIC_API_URL}/job`, {
 					method: 'PUT',
 					body: formData,
 					headers: {

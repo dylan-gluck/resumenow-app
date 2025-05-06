@@ -1,7 +1,8 @@
 <script lang="ts">
+	import { PUBLIC_API_URL } from '$env/static/public';
 	import { Button } from '@/components/ui/button';
-	import type { Resume } from '@/types/resume';
 	import { Upload, FileUp, X } from 'lucide-svelte';
+	import type { Resume } from '@/types/resume';
 
 	let {
 		resumeImport = $bindable(),
@@ -59,7 +60,7 @@
 		formData.append('file', file);
 
 		try {
-			const response = await fetch('http://127.0.0.1:8000/parse', {
+			const response = await fetch(`${PUBLIC_API_URL}/parse`, {
 				method: 'PUT',
 				body: formData,
 				headers: {
