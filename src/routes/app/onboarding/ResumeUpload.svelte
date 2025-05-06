@@ -59,7 +59,6 @@
 		formData.append('file', file);
 
 		try {
-			// Using relative URL to avoid CORS issues
 			const response = await fetch('http://127.0.0.1:8000/parse', {
 				method: 'PUT',
 				body: formData,

@@ -16,7 +16,7 @@
 </script>
 
 <header class="py-6">
-	<div class="container flex items-center justify-between gap-4">
+	<div class="mx-auto flex max-w-[1600px] items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
 		<div class="navbar-start">
 			<Logo />
 		</div>
