@@ -4,7 +4,7 @@
 </script>
 
 <svelte:head>
-	<title>Home | Svelte Saas Starter</title>
+	<title>Home | ResumeNow</title>
 	<meta
 		name="description"
 		content="A hit-the-ground-running template for building a SaaS application using SvelteKit, Supabase, Stripe and Shadcn UI."

@@ -4,7 +4,7 @@
 </script>
 
 <svelte:head>
-	<title>Error | Svelte Saas Starter</title>
+	<title>Error | ResumeNow</title>
 </svelte:head>
 
 <main class="grid min-h-full place-items-center bg-background px-6 py-24 sm:py-32 lg:px-8">

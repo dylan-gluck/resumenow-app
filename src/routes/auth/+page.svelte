@@ -7,7 +7,7 @@
 </script>
 
 <svelte:head>
-	<title>Login | Svelte Saas Starter</title>
+	<title>Login | ResumeNow</title>
 </svelte:head>
 
 <div class="py-24 sm:py-32">

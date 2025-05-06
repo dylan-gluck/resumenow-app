@@ -13,7 +13,7 @@
 </script>
 
 <svelte:head>
-	<title>Onboarding | Svelte Saas Starter</title>
+	<title>Onboarding | ResumeNow</title>
 </svelte:head>
 
 <div class="py-12">
