@@ -14,9 +14,10 @@
 
 <div class="py-12">
 	<div class="container">
-		<h2 class="text-4xl font-bold leading-none">Edit Resume</h2>
+		<h2 class="text-4xl font-bold leading-none">Base Resume</h2>
 		<p class="mt-4 max-w-[60ch] text-lg text-muted-foreground">
-			This info will be used as a base for each resume you generate.
+			Contact info, education history, work experience, skills, and certifications. This info will
+			be used as a base for each resume you generate.
 		</p>
 
 		<div class="mt-12 grid grid-cols-1 gap-12">

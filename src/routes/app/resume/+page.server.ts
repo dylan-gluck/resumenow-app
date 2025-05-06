@@ -5,6 +5,10 @@ import { formSchema } from '@/components/resume-form/schema';
 import { zod } from 'sveltekit-superforms/adapters';
 
 export const load: PageServerLoad = async ({ locals: { user, supabase } }) => {
+	if (!user) {
+		redirect(302, '/auth');
+	}
+
 	const { data: profile, error: profileError } = await supabase
 		.from('profiles')
 		.select('*')
@@ -28,18 +32,25 @@ export const actions: Actions = {
 			return fail(400, {
 				form
 			});
-		} else {
-			const { data, error } = await supabase
-				.from('profiles')
-				.update({ resume: form.data, updated_at: new Date() })
-				.eq('user_id', user.id)
-				.select();
+		}
 
-			if (error) {
-				console.error(error);
-			} else {
-				console.log('User profile updated successfully', data);
-			}
+		if (!user) {
+			return fail(401, {
+				form,
+				message: 'Unauthorized'
+			});
+		}
+
+		const { data, error } = await supabase
+			.from('profiles')
+			.update({ resume: form.data, updated_at: new Date() })
+			.eq('user_id', user.id)
+			.select();
+
+		if (error) {
+			console.error(error);
+		} else {
+			console.log('User profile updated successfully', data);
 		}
 
 		return {

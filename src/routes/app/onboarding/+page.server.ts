@@ -20,18 +20,25 @@ export const actions: Actions = {
 			return fail(400, {
 				form
 			});
-		} else {
-			const { data, error } = await supabase
-				.from('profiles')
-				.upsert([{ user_id: user.id, resume: form.data }])
-				.select();
+		}
 
-			if (error) {
-				console.error(error);
-			} else {
-				console.log('User profile updated successfully', data);
-				return redirect(302, '/app/resume');
-			}
+		if (!user) {
+			return fail(401, {
+				form,
+				message: 'Unauthorized'
+			});
+		}
+
+		const { data, error } = await supabase
+			.from('profiles')
+			.upsert([{ user_id: user.id, resume: form.data }])
+			.select();
+
+		if (error) {
+			console.error(error);
+		} else {
+			console.log('User profile updated successfully', data);
+			return redirect(302, '/app/resume');
 		}
 
 		return {

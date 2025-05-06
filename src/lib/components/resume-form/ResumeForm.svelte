@@ -32,7 +32,7 @@
 		isImporting: boolean;
 	} = $props();
 
-	let isSaving = false;
+	let isSaving = $state(false);
 
 	const form = superForm(data.form, {
 		validators: zodClient(formSchema),
@@ -82,7 +82,6 @@
 		// If resumeImport changes and is not empty, update $formData with data from resumeImport
 		if (resumeImport && Object.keys(resumeImport).length > 0) {
 			console.log('Updating form data with resumeImport:', resumeImport);
-
 			$formData = resumeImport;
 		}
 	});
@@ -230,24 +229,15 @@
 				];
 				break;
 			case 'tools':
-				if (!$formData.technical_skills.tools) {
-					$formData.technical_skills.tools = [];
-				}
 				$formData.technical_skills.tools = [...$formData.technical_skills.tools, skillToAdd];
 				break;
 			case 'cloud_platforms':
-				if (!$formData.technical_skills.cloud_platforms) {
-					$formData.technical_skills.cloud_platforms = [];
-				}
 				$formData.technical_skills.cloud_platforms = [
 					...$formData.technical_skills.cloud_platforms,
 					skillToAdd
 				];
 				break;
 			case 'other':
-				if (!$formData.technical_skills.other) {
-					$formData.technical_skills.other = [];
-				}
 				$formData.technical_skills.other = [...$formData.technical_skills.other, skillToAdd];
 				break;
 		}
@@ -270,11 +260,11 @@
 	}
 
 	// Local state for add functions
-	let newPublicationText = '';
-	let newConferenceText = '';
-	let newVolunteerWorkText = '';
-	let newInterestText = '';
-	let newReferenceText = '';
+	let newPublicationText = $state('');
+	let newConferenceText = $state('');
+	let newVolunteerWorkText = $state('');
+	let newInterestText = $state('');
+	let newReferenceText = $state('');
 </script>
 
 <form method="POST" class="relative flex flex-col gap-4 px-2" use:enhance>
