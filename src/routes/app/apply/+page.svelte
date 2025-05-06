@@ -37,8 +37,10 @@
 
 		processing = true;
 
-		const urlRegex = /^(https?:\/\/)?([\da-z\.]+)\.([a-z\.]+)([\/\w\.\-?~&%=\(\)!\.\+\:\,\'#]*)$/;
-		if (urlRegex.test(url)) {
+		const urlRegex =
+			/^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*)$/;
+		if (!urlRegex.test(url)) {
+			console.log('Invalid url');
 			processing = false;
 			return;
 		}
