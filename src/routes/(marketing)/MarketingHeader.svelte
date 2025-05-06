@@ -9,12 +9,14 @@
 
 <header class="py-6">
 	<div class="mx-auto flex max-w-[1600px] items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
-		<Logo />
-		<div class="flex items-center gap-6">
+		<div class="navbar-start">
+			<Logo />
+		</div>
+		<div class="navbar-center">
 			<a href="/" class="text-sm leading-none">Home</a>
 			<a href="##" class="text-sm leading-none">Pricing</a>
 		</div>
-		<div class="flex items-center gap-2">
+		<div class="navbar-end">
 			{#if user}
 				<Button
 					size="sm"

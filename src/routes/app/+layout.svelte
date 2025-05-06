@@ -5,6 +5,6 @@
 </script>
 
 <AppHeader />
-<main>
+<main class="flex flex-1 flex-col">
 	{@render children()}
 </main>

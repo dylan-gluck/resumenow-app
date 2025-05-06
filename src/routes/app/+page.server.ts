@@ -14,7 +14,7 @@ export const load: PageServerLoad = async ({ locals: { supabase, user } }) => {
 			redirect(303, '/app/onboarding');
 		}
 
-		redirect(303, '/app/dashboard');
+		redirect(303, '/app/apply');
 	}
 
 	return {};

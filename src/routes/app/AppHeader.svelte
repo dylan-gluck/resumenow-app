@@ -17,13 +17,15 @@
 
 <header class="py-6">
 	<div class="container flex items-center justify-between gap-4">
-		<Logo />
-		<div class="flex items-center gap-4">
-			<a href="/app/dashboard" class="text-sm leading-none">Dashboard</a>
-			<a href="/app/resume" class="text-sm leading-none">Base Resume</a>
-			<a href="/app/settings" class="text-sm leading-none">Settings</a>
+		<div class="navbar-start">
+			<Logo />
 		</div>
-		<div class="flex items-center gap-4">
+		<div class="navbar-center gap-6">
+			<a href="/app/apply" class="text-sm leading-none">Apply</a>
+			<a href="##" class="text-sm leading-none">Positions</a>
+			<a href="/app/resume" class="text-sm leading-none">Resume</a>
+		</div>
+		<div class="navbar-end gap-4">
 			<Button size="sm" variant="outline" onclick={logout}>Logout</Button>
 		</div>
 	</div>

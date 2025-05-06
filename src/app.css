@@ -89,3 +89,22 @@
 		@apply bg-background text-foreground;
 	}
 }
+
+.navbar-start {
+	justify-content: flex-start;
+	align-items: center;
+	width: 50%;
+	display: inline-flex;
+}
+.navbar-center {
+	flex-shrink: 0;
+	align-items: center;
+	display: inline-flex;
+	gap: 1rem;
+}
+.navbar-end {
+	justify-content: flex-end;
+	align-items: center;
+	width: 50%;
+	display: inline-flex;
+}
