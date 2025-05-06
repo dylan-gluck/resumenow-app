@@ -15,7 +15,12 @@ export const load: PageServerLoad = async ({ locals: { user, supabase } }) => {
 		.eq('user_id', user.id)
 		.single();
 
-	const resume = profile.resume || {};
+	if (profileError) {
+		// No profile, redirect to onboarding
+		redirect(303, '/app/onboarding');
+	}
+
+	const resume = profile.resume;
 
 	return {
 		form: await superValidate(resume, zod(formSchema))
