@@ -1,8 +1,9 @@
 <script lang="ts">
 	import { Button } from '@/components/ui/button/index.js';
 	import { CircleDollarSign, Loader, MapPin } from '@lucide/svelte';
+	import type { PageData } from './$types';
 
-	let { data } = $props();
+	let { data }: { data: PageData } = $props();
 
 	let position = $derived(data.position);
 </script>
@@ -32,17 +33,21 @@
 					{/if}
 				</div>
 				<div class="flex items-center justify-center gap-4">
-					<Button onclick={() => {}} variant="outline" size="sm">Generate Resume</Button>
-					<Button onclick={() => {}} variant="outline" size="sm">Generate Cover Letter</Button>
+					{#if !position.resume}
+						<Button onclick={() => {}} variant="outline" size="sm">Generate Resume</Button>
+					{/if}
+					{#if !position.cover_letter}
+						<Button onclick={() => {}} variant="outline" size="sm">Generate Cover Letter</Button>
+					{/if}
 				</div>
 			</div>
 		</div>
 		<div class="mx-auto max-w-[1200px] px-4 py-12 sm:px-6 lg:px-8">
 			<div class="rounded-tl-xl rounded-tr-xl border border-b-0 border-border p-12">
 				<div class="px-4 sm:px-0">
-					<h3 class="text-base/7 font-semibold text-foreground">{position.job_data?.title}</h3>
+					<h3 class="text-base/7 font-semibold text-foreground">{position.title}</h3>
 					<p class="mt-1 max-w-2xl text-sm/6 text-muted-foreground">
-						{position.job_data?.company}
+						{position.company}
 					</p>
 				</div>
 				<div class="mt-6 border-t border-border">

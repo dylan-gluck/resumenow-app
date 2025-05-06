@@ -96,10 +96,11 @@ export type Database = {
       }
       resumes: {
         Row: {
-          attachments: Json[] | null
           company: string
+          cover_letter: Json | null
           created_at: string
           id: string
+          interview_prep: Json | null
           job_data: Json | null
           job_url: string | null
           resume: Json | null
@@ -108,10 +109,11 @@ export type Database = {
           user_id: string | null
         }
         Insert: {
-          attachments?: Json[] | null
           company: string
+          cover_letter?: Json | null
           created_at?: string
-          id: string
+          id?: string
+          interview_prep?: Json | null
           job_data?: Json | null
           job_url?: string | null
           resume?: Json | null
@@ -120,10 +122,11 @@ export type Database = {
           user_id?: string | null
         }
         Update: {
-          attachments?: Json[] | null
           company?: string
+          cover_letter?: Json | null
           created_at?: string
           id?: string
+          interview_prep?: Json | null
           job_data?: Json | null
           job_url?: string | null
           resume?: Json | null

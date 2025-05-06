@@ -24,8 +24,10 @@
 			<a href="/app/apply" class="navbar-link" class:active={page.url.pathname === '/app/apply'}
 				>Apply</a
 			>
-			<a href="##" class="navbar-link" class:active={page.url.pathname.startsWith('/app/positions')}
-				>Positions</a
+			<a
+				href="/app/positions"
+				class="navbar-link"
+				class:active={page.url.pathname.startsWith('/app/positions')}>Positions</a
 			>
 			<a href="/app/resume" class="navbar-link" class:active={page.url.pathname === '/app/resume'}
 				>Resume</a
