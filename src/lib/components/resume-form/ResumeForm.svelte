@@ -1490,7 +1490,7 @@
 		</Accordion.Item>
 	</Accordion.Root>
 
-	<div class="mt-10 flex justify-end gap-2 border-t border-border py-4">
+	<div class="mt-8 flex justify-end gap-2 py-4">
 		{#if isSaving}
 			<Button variant="outline" disabled><Loader class="animate-spin" /> Saving...</Button>
 		{:else}

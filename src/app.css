@@ -102,6 +102,13 @@
 	display: inline-flex;
 	gap: 1rem;
 }
+.navbar-link {
+	@apply text-sm leading-none;
+
+	&.active {
+		@apply font-semibold;
+	}
+}
 .navbar-end {
 	justify-content: flex-end;
 	align-items: center;
