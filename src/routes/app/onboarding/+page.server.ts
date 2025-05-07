@@ -4,14 +4,28 @@ import { superValidate } from 'sveltekit-superforms';
 import { formSchema } from '@/components/resume-form/schema';
 import { zod } from 'sveltekit-superforms/adapters';
 
-export const load: PageServerLoad = async () => {
+export const load: PageServerLoad = async ({ locals: { user, supabase } }) => {
+	if (!user) {
+		redirect(302, '/auth');
+	}
+
+	const { data: profile, error: profileError } = await supabase
+		.from('profiles')
+		.select('*')
+		.eq('user_id', user.id)
+		.single();
+
+	if (profile) {
+		redirect(302, '/app/apply');
+	}
+
 	return {
 		form: await superValidate(zod(formSchema))
 	};
 };
 
 export const actions: Actions = {
-	default: async (event) => {
+	save: async (event) => {
 		const user = event.locals.user;
 		const supabase = event.locals.supabase;
 		const form = await superValidate(event, zod(formSchema));
@@ -31,13 +45,13 @@ export const actions: Actions = {
 
 		const { data, error } = await supabase
 			.from('profiles')
-			.upsert([{ user_id: user.id, resume: form.data }])
+			.insert([{ user_id: user.id, resume: form.data }])
 			.select();
 
 		if (error) {
 			console.error(error);
 		} else {
-			return redirect(302, '/app/resume');
+			return redirect(302, '/app/apply');
 		}
 
 		return {

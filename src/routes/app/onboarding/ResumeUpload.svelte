@@ -7,7 +7,7 @@
 	let {
 		resumeImport = $bindable(),
 		isImporting = $bindable()
-	}: { resumeImport: Resume; isImporting: boolean } = $props();
+	}: { resumeImport: Resume | undefined; isImporting: boolean } = $props();
 
 	let fileInput: HTMLInputElement;
 	let isDragging = $state(false);
@@ -83,12 +83,6 @@
 			}
 		} catch (error) {
 			console.error('Error uploading resume:', error);
-
-			// For debugging purposes, log more detailed error info
-			if (error instanceof Error) {
-				console.error('Error details:', error.message);
-			}
-
 			alert('Failed to upload or parse resume. Please try again.');
 		} finally {
 			isImporting = false;
@@ -128,7 +122,7 @@
 				<span class="text-sm font-medium">{fileName}</span>
 			</div>
 		</div>
-		<Button variant="outline" onclick={clearFile}>
+		<Button variant="outline" onclick={clearFile} disabled={isImporting}>
 			<X />
 		</Button>
 	</div>
@@ -143,6 +137,7 @@
 		ondrop={handleDrop}
 		onclick={openFileDialog}
 		type="button"
+		disabled={isImporting}
 	>
 		<Upload class="h-8 w-8 text-primary/80" />
 		<div class="text-center">

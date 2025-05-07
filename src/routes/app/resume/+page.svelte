@@ -1,11 +1,12 @@
 <script lang="ts">
+	import type { Resume } from '@/types/resume';
 	import type { PageData } from './$types';
 	import ResumeForm from '@/components/resume-form/ResumeForm.svelte';
 
 	let { data }: { data: PageData } = $props();
 
-	let isImporting = false;
-	let resumeImport = {};
+	let isImporting: boolean = $state(false);
+	let resumeImport: Resume | undefined = $state(undefined);
 </script>
 
 <svelte:head>

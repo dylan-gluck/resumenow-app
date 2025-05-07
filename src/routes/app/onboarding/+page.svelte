@@ -9,7 +9,7 @@
 	let { data }: { data: PageData } = $props();
 
 	let isImporting: boolean = $state(false);
-	let resumeImport: Resume = $state<Resume>({});
+	let resumeImport: Resume | undefined = $state(undefined);
 </script>
 
 <svelte:head>
@@ -18,13 +18,13 @@
 
 <div class="py-12">
 	<div class="container">
-		<h2 class="text-4xl font-bold leading-none">Onboarding</h2>
-		<p class="mt-4 max-w-[60ch] text-lg text-muted-foreground">
-			Let's get started! Upload your current resume or enter your work experience below. This info
-			will be used as a base for each resume you generate.
+		<h2 class="text-center text-4xl font-bold leading-none">Let's get started!</h2>
+		<p class="mx-auto mt-4 max-w-[60ch] text-center text-lg text-muted-foreground">
+			Upload your current resume or enter your work experience below. This info will be used as a
+			base for each resume you generate.
 		</p>
 
-		<div class="mt-12 grid grid-cols-1 gap-12 md:grid-cols-2">
+		<div class="mt-20 grid grid-cols-1 gap-12 lg:grid-cols-3">
 			<div class="flex flex-col gap-4">
 				<ResumeUpload bind:resumeImport bind:isImporting />
 				<div class="my-4 flex items-center justify-center gap-4">
@@ -32,7 +32,7 @@
 					<span class="flex-none text-xs text-muted-foreground">OR</span>
 					<Separator class="flex-1" />
 				</div>
-				<LinkedinImport />
+				<LinkedinImport bind:resumeImport bind:isImporting />
 			</div>
 			<ResumeForm {data} {resumeImport} {isImporting} />
 		</div>

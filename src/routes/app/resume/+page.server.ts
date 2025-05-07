@@ -3,6 +3,7 @@ import { fail, redirect } from '@sveltejs/kit';
 import { superValidate } from 'sveltekit-superforms';
 import { formSchema } from '@/components/resume-form/schema';
 import { zod } from 'sveltekit-superforms/adapters';
+import type { Resume } from '@/types/resume';
 
 export const load: PageServerLoad = async ({ locals: { user, supabase } }) => {
 	if (!user) {
@@ -20,7 +21,7 @@ export const load: PageServerLoad = async ({ locals: { user, supabase } }) => {
 		redirect(303, '/app/onboarding');
 	}
 
-	const resume = profile.resume;
+	const resume = profile.resume as Resume;
 
 	return {
 		form: await superValidate(resume, zod(formSchema))
@@ -28,7 +29,7 @@ export const load: PageServerLoad = async ({ locals: { user, supabase } }) => {
 };
 
 export const actions: Actions = {
-	default: async (event) => {
+	save: async (event) => {
 		const user = event.locals.user;
 		const supabase = event.locals.supabase;
 		const form = await superValidate(event, zod(formSchema));
@@ -48,7 +49,7 @@ export const actions: Actions = {
 
 		const { data, error } = await supabase
 			.from('profiles')
-			.update({ resume: form.data, updated_at: new Date() })
+			.update({ resume: form.data, updated_at: new Date().toString() })
 			.eq('user_id', user.id)
 			.select();
 

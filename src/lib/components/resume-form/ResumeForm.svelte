@@ -21,6 +21,7 @@
 		type Certification,
 		type Resume
 	} from '@/types/resume';
+	import SuperDebug from 'sveltekit-superforms';
 
 	let {
 		data,
@@ -28,7 +29,7 @@
 		isImporting
 	}: {
 		data: { form: SuperValidated<Infer<FormSchema>> };
-		resumeImport: Resume;
+		resumeImport: Resume | undefined;
 		isImporting: boolean;
 	} = $props();
 
@@ -48,39 +49,9 @@
 
 	const { form: formData, errors: formErrors, enhance } = form;
 
-	// Initialize default values for contact_info immediately to prevent race condition
-	if (!$formData.contact_info) {
-		$formData.contact_info = {
-			full_name: '',
-			email: '',
-			phone: '',
-			address: '',
-			linkedin: '',
-			github: '',
-			portfolio: '',
-			google_scholar: ''
-		};
-	}
-
-	// Initialize technical_skills immediately
-	if (!$formData.technical_skills) {
-		$formData.technical_skills = {
-			programming_languages: [],
-			frameworks_libraries: [],
-			databases: [],
-			tools: [],
-			cloud_platforms: [],
-			other: []
-		};
-	}
-
-	// Initialize critical arrays immediately
-	if (!$formData.education) $formData.education = [];
-	if (!$formData.work_experience) $formData.work_experience = [];
-
 	$effect(() => {
 		// If resumeImport changes and is not empty, update $formData with data from resumeImport
-		if (resumeImport && Object.keys(resumeImport).length > 0) {
+		if (resumeImport !== undefined) {
 			console.log('Updating form data with resumeImport:', resumeImport);
 			$formData = resumeImport;
 		}
@@ -88,8 +59,8 @@
 
 	// Initialize default objects for each section
 	const newEducation: Education = {
-		institution: undefined,
-		degree: undefined,
+		institution: '',
+		degree: '',
 		field_of_study: undefined,
 		graduation_date: undefined,
 		gpa: undefined,
@@ -107,8 +78,8 @@
 	});
 
 	const newWorkExperience: WorkExperience = {
-		company: undefined,
-		position: undefined,
+		company: '',
+		position: '',
 		start_date: undefined,
 		end_date: undefined,
 		is_current: false,
@@ -176,7 +147,7 @@
 	const newCertification: Certification = {
 		name: '',
 		issuer: '',
-		date_obtained: undefined,
+		date_obtained: '',
 		expiration_date: undefined,
 		credential_id: undefined
 	};
@@ -267,7 +238,14 @@
 	let newReferenceText = $state('');
 </script>
 
-<form method="POST" class="relative flex flex-col gap-4 px-2" use:enhance>
+<!-- <SuperDebug data={formData} />
+<SuperDebug data={formErrors} /> -->
+<form
+	method="POST"
+	action="?/save"
+	class="relative flex flex-col gap-4 px-2 lg:col-span-2"
+	use:enhance
+>
 	{#if isImporting}
 		<div
 			class="absolute inset-0 z-10 m-auto flex cursor-wait flex-col items-center justify-center gap-3 bg-background/50 backdrop-blur-sm"
@@ -414,11 +392,12 @@
 
 				<Sheet.Root>
 					<Sheet.Trigger
+						type="button"
 						class={buttonVariants({ variant: 'outline' }) + ' mt-4 w-fit'}
 						onclick={() => {
 							selectedEducation = {
-								institution: undefined,
-								degree: undefined,
+								institution: '',
+								degree: '',
 								field_of_study: undefined,
 								graduation_date: undefined,
 								gpa: undefined,
@@ -523,11 +502,12 @@
 
 				<Sheet.Root>
 					<Sheet.Trigger
+						type="button"
 						class={buttonVariants({ variant: 'outline' }) + ' mt-4 w-fit'}
 						onclick={() => {
 							selectedWorkExperience = {
-								company: undefined,
-								position: undefined,
+								company: '',
+								position: '',
 								start_date: undefined,
 								end_date: undefined,
 								is_current: false,
@@ -780,6 +760,7 @@
 
 					<Sheet.Root>
 						<Sheet.Trigger
+							type="button"
 							class={buttonVariants({ variant: 'outline' }) + ' mt-4 w-fit'}
 							onclick={() => {
 								selectedSkill = {
@@ -924,6 +905,7 @@
 
 				<Sheet.Root>
 					<Sheet.Trigger
+						type="button"
 						class={buttonVariants({ variant: 'outline' }) + ' mt-4 w-fit'}
 						onclick={() => {
 							selectedProject = {
@@ -1086,6 +1068,7 @@
 
 				<Sheet.Root>
 					<Sheet.Trigger
+						type="button"
 						class={buttonVariants({ variant: 'outline' }) + ' mt-4 w-fit'}
 						onclick={() => {
 							selectedContribution = {
@@ -1183,12 +1166,13 @@
 
 				<Sheet.Root>
 					<Sheet.Trigger
+						type="button"
 						class={buttonVariants({ variant: 'outline' }) + ' mt-4 w-fit'}
 						onclick={() => {
 							selectedCertification = {
 								name: '',
 								issuer: '',
-								date_obtained: undefined,
+								date_obtained: '',
 								expiration_date: undefined,
 								credential_id: undefined
 							};
@@ -1462,9 +1446,6 @@
 									variant="outline"
 									onclick={() => {
 										if (newReferenceText) {
-											if (!$formData.references) {
-												$formData.references = [];
-											}
 											$formData.references = [...$formData.references, newReferenceText];
 											newReferenceText = '';
 										}
@@ -1484,7 +1465,7 @@
 		{#if isSaving}
 			<Button variant="outline" disabled><Loader class="animate-spin" /> Saving...</Button>
 		{:else}
-			<Form.Button>Save Resume</Form.Button>
+			<Form.Button type="submit">Save Resume</Form.Button>
 		{/if}
 	</div>
 </form>
