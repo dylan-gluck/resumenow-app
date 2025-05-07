@@ -49,7 +49,7 @@ export const actions: Actions = {
 
 		const { data, error } = await supabase
 			.from('profiles')
-			.update({ resume: form.data, updated_at: new Date().toString() })
+			.update({ resume: form.data })
 			.eq('user_id', user.id)
 			.select();
 
