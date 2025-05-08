@@ -21,6 +21,7 @@ export const load: PageServerLoad = async ({ locals: { user, supabase } }) => {
 		redirect(303, '/app/onboarding');
 	}
 
+	// @ts-ignore
 	const resume = profile.resume as Resume;
 
 	return {

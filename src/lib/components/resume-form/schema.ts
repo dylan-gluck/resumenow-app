@@ -36,7 +36,7 @@ export const formSchema = z.object({
 			position: z.string(),
 			start_date: z.string().optional().nullable(),
 			end_date: z.string().optional().nullable(),
-			is_current: z.boolean().optional().nullable(),
+			is_current: z.boolean().optional(),
 			responsibilities: z.array(z.string()),
 			technologies: z.array(z.string())
 		})
@@ -54,8 +54,8 @@ export const formSchema = z.object({
 			name: z.string(),
 			description: z.string().optional().nullable(),
 			technologies: z.array(z.string()),
-			url: z.string().url().optional().nullable(),
-			github_url: z.string().url().optional().nullable(),
+			url: z.string().optional().nullable(),
+			github_url: z.string().optional().nullable(),
 			start_date: z.string().optional().nullable(),
 			end_date: z.string().optional().nullable(),
 			role: z.string().optional().nullable(),
@@ -67,7 +67,7 @@ export const formSchema = z.object({
 			project_name: z.string(),
 			contribution_type: z.string().optional().nullable(),
 			description: z.string().optional().nullable(),
-			url: z.string().url().optional().nullable()
+			url: z.string().optional().nullable()
 		})
 	),
 	certifications: z.array(

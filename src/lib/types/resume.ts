@@ -1,20 +1,20 @@
 export interface ContactInfo {
 	full_name: string;
-	email?: string;
-	phone?: string;
-	address?: string;
-	linkedin?: string;
-	github?: string;
-	portfolio?: string;
-	google_scholar?: string;
+	email?: string | null;
+	phone?: string | null;
+	address?: string | null;
+	linkedin?: string | null;
+	github?: string | null;
+	portfolio?: string | null;
+	google_scholar?: string | null;
 }
 
 export interface Education {
 	institution: string;
 	degree: string;
-	field_of_study?: string;
-	graduation_date?: string;
-	gpa?: number;
+	field_of_study?: string | null;
+	graduation_date?: string | null;
+	gpa?: number | null;
 	honors: string[];
 	relevant_courses: string[];
 }
@@ -22,8 +22,8 @@ export interface Education {
 export interface WorkExperience {
 	company: string;
 	position: string;
-	start_date?: string;
-	end_date?: string;
+	start_date?: string | null;
+	end_date?: string | null;
 	is_current?: boolean;
 	responsibilities: string[];
 	technologies: string[];
@@ -31,7 +31,7 @@ export interface WorkExperience {
 
 export interface Skill {
 	name: string;
-	level?: string;
+	level?: string | null;
 	years_of_experience?: number;
 }
 
@@ -46,34 +46,34 @@ export interface TechnicalSkills {
 
 export interface Project {
 	name: string;
-	description?: string;
+	description?: string | null;
 	technologies: string[];
-	url?: string;
-	github_url?: string;
-	start_date?: string;
-	end_date?: string;
-	role?: string;
+	url?: string | null;
+	github_url?: string | null;
+	start_date?: string | null;
+	end_date?: string | null;
+	role?: string | null;
 	key_achievements: string[];
 }
 
 export interface Certification {
 	name: string;
 	issuer: string;
-	date_obtained?: string;
-	expiration_date?: string;
-	credential_id?: string;
+	date_obtained?: string | null;
+	expiration_date?: string | null;
+	credential_id?: string | null;
 }
 
 export interface OpenSourceContribution {
 	project_name: string;
-	contribution_type?: string;
-	description?: string;
-	url?: string;
+	contribution_type?: string | null;
+	description?: string | null;
+	url?: string | null;
 }
 
 export interface Resume {
 	contact_info: ContactInfo;
-	summary?: string;
+	summary?: string | null;
 	education: Education[];
 	work_experience: WorkExperience[];
 	technical_skills: TechnicalSkills;

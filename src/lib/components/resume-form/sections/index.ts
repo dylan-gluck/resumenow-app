@@ -1,0 +1,9 @@
+export { default as ContactSection } from './ContactSection.svelte';
+export { default as SummarySection } from './SummarySection.svelte';
+export { default as EducationSection } from './EducationSection.svelte';
+export { default as WorkExperienceSection } from './WorkExperienceSection.svelte';
+export { default as SkillsSection } from './SkillsSection.svelte';
+export { default as ProjectsSection } from './ProjectsSection.svelte';
+export { default as OpenSourceContributionsSection } from './OpenSourceContributionsSection.svelte';
+export { default as CertificationsSection } from './CertificationsSection.svelte';
+export { default as AdditionalInfoSection } from './AdditionalInfoSection.svelte';
