@@ -10,6 +10,7 @@
   import type { FormSchema } from "../schema";
   import type { Infer } from "sveltekit-superforms";
   import type { WorkExperience } from "@/types/resume";
+  import { Pencil, Trash2 } from 'lucide-svelte';
 
   let { form, formData }: { 
     form: SuperForm<Infer<FormSchema>>;
@@ -36,6 +37,96 @@
     responsibilities: [...(newWorkExperience.responsibilities || [])],
     technologies: [...(newWorkExperience.technologies || [])]
   });
+
+  // State for edit mode
+  let isEditMode = $state(false);
+  let editIndex = $state(-1);
+  let sheetOpen = $state(false);
+
+  // Method to reset the selected work experience
+  function resetSelectedWorkExperience() {
+    selectedWorkExperience = {
+      company: '',
+      position: '',
+      start_date: undefined,
+      end_date: undefined,
+      is_current: false,
+      responsibilities: [''],
+      technologies: ['']
+    };
+  }
+
+  // Start add mode
+  function startAddMode() {
+    isEditMode = false;
+    editIndex = -1;
+    resetSelectedWorkExperience();
+    sheetOpen = true;
+  }
+
+  // Start edit mode
+  function startEditMode(index: number) {
+    isEditMode = true;
+    editIndex = index;
+    
+    // Clone the selected work experience to avoid direct mutation
+    const experience = $formData.work_experience[index];
+    selectedWorkExperience = {
+      company: experience.company,
+      position: experience.position,
+      start_date: experience.start_date || '',
+      end_date: experience.end_date || '',
+      is_current: experience.is_current || false,
+      responsibilities: experience.responsibilities ? [...experience.responsibilities] : [''],
+      technologies: experience.technologies ? [...experience.technologies] : ['']
+    };
+    
+    sheetOpen = true;
+  }
+
+  // Delete work experience
+  function deleteWorkExperience(index: number) {
+    if (!$formData.work_experience) return;
+    
+    $formData.work_experience = $formData.work_experience.filter((_: WorkExperience, i: number) => i !== index);
+  }
+
+  // Method to save work experience to the form
+  function saveWorkExperience() {
+    if (!$formData.work_experience) {
+      $formData.work_experience = [];
+    }
+
+    const experienceData = {
+      company: selectedWorkExperience.company,
+      position: selectedWorkExperience.position,
+      start_date: selectedWorkExperience.start_date,
+      end_date: selectedWorkExperience.end_date,
+      is_current: selectedWorkExperience.is_current,
+      responsibilities: [...(selectedWorkExperience.responsibilities || [])].filter(r => r.trim() !== ''),
+      technologies: [...(selectedWorkExperience.technologies || [])].filter(t => t.trim() !== '')
+    };
+
+    if (isEditMode && editIndex >= 0) {
+      // Update existing work experience
+      $formData.work_experience = $formData.work_experience.map((experience: WorkExperience, i: number) => {
+        if (i === editIndex) {
+          return experienceData;
+        }
+        return experience;
+      });
+    } else {
+      // Add new work experience
+      $formData.work_experience = [
+        ...$formData.work_experience,
+        experienceData
+      ];
+    }
+
+    // Reset state
+    isEditMode = false;
+    editIndex = -1;
+  }
 </script>
 
 <Accordion.Item value="work_experience">
@@ -50,6 +141,7 @@
           <Table.Head>Position</Table.Head>
           <Table.Head>Period</Table.Head>
           <Table.Head>Current</Table.Head>
+          <Table.Head class="text-right">Actions</Table.Head>
         </Table.Row>
       </Table.Header>
       <Table.Body>
@@ -63,36 +155,46 @@
                 : experience.end_date}
             </Table.Cell>
             <Table.Cell>{experience.is_current ? 'Yes' : 'No'}</Table.Cell>
+            <Table.Cell class="text-right">
+              <div class="flex justify-end gap-1">
+                <Button 
+                  variant="ghost" 
+                  size="icon" 
+                  class="h-8 w-8" 
+                  onclick={() => startEditMode(i)}
+                >
+                  <Pencil class="h-4 w-4" />
+                </Button>
+                <Button 
+                  variant="ghost" 
+                  size="icon" 
+                  class="h-8 w-8" 
+                  onclick={() => deleteWorkExperience(i)}
+                >
+                  <Trash2 class="h-4 w-4" />
+                </Button>
+              </div>
+            </Table.Cell>
           </Table.Row>
         {/each}
         {#if $formData.work_experience.length === 0}
           <Table.Row>
-            <Table.Cell colspan={4} class="text-center">No work experience added</Table.Cell>
+            <Table.Cell colspan={5} class="text-center">No work experience added</Table.Cell>
           </Table.Row>
         {/if}
       </Table.Body>
     </Table.Root>
 
-    <Sheet.Root>
+    <Sheet.Root bind:open={sheetOpen}>
       <Sheet.Trigger
         type="button"
         class={buttonVariants({ variant: 'outline' }) + ' mt-4 w-fit'}
-        onclick={() => {
-          selectedWorkExperience = {
-            company: '',
-            position: '',
-            start_date: undefined,
-            end_date: undefined,
-            is_current: false,
-            responsibilities: [''],
-            technologies: ['']
-          };
-        }}>Add Work Experience</Sheet.Trigger
+        onclick={startAddMode}>Add Work Experience</Sheet.Trigger
       >
       <Sheet.Content side="right">
         <Sheet.Header>
-          <Sheet.Title>Work Experience</Sheet.Title>
-          <Sheet.Description>Add or update your work history.</Sheet.Description>
+          <Sheet.Title>{isEditMode ? 'Edit' : 'Add'} Work Experience</Sheet.Title>
+          <Sheet.Description>{isEditMode ? 'Update' : 'Add'} details about your work history.</Sheet.Description>
         </Sheet.Header>
         <div class="grid gap-4 py-4">
           <div class="space-y-2">
@@ -165,23 +267,22 @@
           </div>
         </div>
         <Sheet.Footer>
-          <Sheet.Close
-            class={buttonVariants({ variant: 'outline' })}
-            onclick={() => {
-              $formData.work_experience = [
-                ...$formData.work_experience,
-                {
-                  company: selectedWorkExperience.company,
-                  position: selectedWorkExperience.position,
-                  start_date: selectedWorkExperience.start_date,
-                  end_date: selectedWorkExperience.end_date,
-                  is_current: selectedWorkExperience.is_current,
-                  responsibilities: [...(selectedWorkExperience.responsibilities || [])],
-                  technologies: [...(selectedWorkExperience.technologies || [])]
-                }
-              ];
-            }}>Save changes</Sheet.Close
-          >
+          <div class="flex w-full justify-between">
+            <Button 
+              variant="outline" 
+              onclick={() => {
+                sheetOpen = false;
+              }}
+            >
+              Cancel
+            </Button>
+            <Sheet.Close
+              class={buttonVariants()}
+              onclick={saveWorkExperience}
+            >
+              {isEditMode ? 'Update' : 'Save'} Experience
+            </Sheet.Close>
+          </div>
         </Sheet.Footer>
       </Sheet.Content>
     </Sheet.Root>

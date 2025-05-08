@@ -2,10 +2,12 @@
 	import { Button } from '@/components/ui/button/index.js';
 	import { CircleDollarSign, Loader, MapPin } from '@lucide/svelte';
 	import type { PageData } from './$types';
+	import type { Job } from '@/types/job';
 
 	let { data }: { data: PageData } = $props();
 
 	let position = $derived(data.position);
+	let jobData = $derived(position?.job_data as unknown as Job);
 </script>
 
 <svelte:head>
@@ -19,16 +21,16 @@
 				<span class="font-semibold text-primary">{position.company}</span>
 				<h2 class="text-3xl font-bold">{position.title}</h2>
 				<div class="flex items-center justify-center gap-4">
-					{#if position.job_data?.location}
+					{#if jobData?.location}
 						<span class="flex items-center gap-1 text-muted-foreground">
 							<MapPin class="h-4 w-4" />
-							<span>{position.job_data?.location}</span>
+							<span>{jobData?.location?.[0]}</span>
 						</span>
 					{/if}
-					{#if position.job_data?.salary}
+					{#if jobData?.salary}
 						<span class="flex items-center gap-1 text-muted-foreground">
 							<CircleDollarSign class="h-4 w-4" />
-							<span>{position.job_data?.salary}</span>
+							<span>{jobData?.salary}</span>
 						</span>
 					{/if}
 				</div>
@@ -52,56 +54,56 @@
 				</div>
 				<div class="mt-6 border-t border-border">
 					<dl class="divide-y divide-border">
-						{#if position.job_data?.description}
+						{#if jobData?.description}
 							<div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
 								<dt class="text-sm/6 font-medium text-foreground">Description</dt>
 								<dd class="mt-1 text-sm/6 text-foreground/80 sm:col-span-2 sm:mt-0">
-									{position.job_data?.description}
+									{jobData?.description}
 								</dd>
 							</div>
 						{/if}
-						{#if position.job_data?.responsibilities}
+						{#if jobData?.responsibilities}
 							<div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
 								<dt class="text-sm/6 font-medium text-foreground">Responsibilities</dt>
 								<dd class="mt-1 text-sm/6 text-foreground/80 sm:col-span-2 sm:mt-0">
 									<ul class="list-disc space-y-2">
-										{#each position.job_data?.responsibilities as responsibility}
+										{#each jobData?.responsibilities || [] as responsibility}
 											<li class="list-item">{responsibility}</li>
 										{/each}
 									</ul>
 								</dd>
 							</div>
 						{/if}
-						{#if position.job_data?.qualifications}
+						{#if jobData?.qualifications}
 							<div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
 								<dt class="text-sm/6 font-medium text-foreground">Qualifications</dt>
 								<dd class="mt-1 text-sm/6 text-foreground/80 sm:col-span-2 sm:mt-0">
 									<ul class="list-disc space-y-2">
-										{#each position.job_data?.qualifications as qualification}
+										{#each jobData?.qualifications || [] as qualification}
 											<li class="list-item">{qualification}</li>
 										{/each}
 									</ul>
 								</dd>
 							</div>
 						{/if}
-						{#if position.job_data?.logistics}
+						{#if jobData?.logistics}
 							<div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
 								<dt class="text-sm/6 font-medium text-foreground">Logistics</dt>
 								<dd class="mt-1 text-sm/6 text-foreground/80 sm:col-span-2 sm:mt-0">
 									<ul class="space-y-2">
-										{#each position.job_data?.logistics as logistics}
+										{#each jobData?.logistics || [] as logistics}
 											<li class="list-item">{logistics}</li>
 										{/each}
 									</ul>
 								</dd>
 							</div>
 						{/if}
-						{#if position.job_data?.additional_info}
+						{#if jobData?.additional_info}
 							<div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
 								<dt class="text-sm/6 font-medium text-foreground">Additional Information</dt>
 								<dd class="mt-1 text-sm/6 text-foreground/80 sm:col-span-2 sm:mt-0">
 									<ul class="space-y-2">
-										{#each position.job_data?.additional_info as additional_info}
+										{#each jobData?.additional_info || [] as additional_info}
 											<li class="list-item">{additional_info}</li>
 										{/each}
 									</ul>

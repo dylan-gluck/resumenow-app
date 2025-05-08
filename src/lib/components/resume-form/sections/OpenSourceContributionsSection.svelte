@@ -10,6 +10,7 @@
 	import type { Infer } from 'sveltekit-superforms';
 	import type { OpenSourceContribution } from '@/types/resume';
 	import * as Card from '@/components/ui/card';
+	import { Pencil, Trash2 } from 'lucide-svelte';
 
 	let {
 		form,
@@ -34,6 +35,11 @@
 		url: newContribution.url
 	});
 
+	// State for edit mode
+	let isEditMode = $state(false);
+	let editIndex = $state(-1);
+	let sheetOpen = $state(false);
+
 	// Method to reset the selected contribution
 	function resetSelectedContribution() {
 		selectedContribution = {
@@ -44,20 +50,70 @@
 		};
 	}
 
+	// Start add mode
+	function startAddMode() {
+		isEditMode = false;
+		editIndex = -1;
+		resetSelectedContribution();
+		sheetOpen = true;
+	}
+
+	// Start edit mode
+	function startEditMode(index: number) {
+		isEditMode = true;
+		editIndex = index;
+		
+		// Clone the selected contribution to avoid direct mutation
+		const contribution = $formData.open_source_contributions[index];
+		selectedContribution = {
+			project_name: contribution.project_name,
+			contribution_type: contribution.contribution_type || '',
+			description: contribution.description || '',
+			url: contribution.url || ''
+		};
+		
+		sheetOpen = true;
+	}
+
+	// Delete contribution
+	function deleteContribution(index: number) {
+		if (!$formData.open_source_contributions) return;
+		
+		$formData.open_source_contributions = $formData.open_source_contributions.filter((_: OpenSourceContribution, i: number) => i !== index);
+	}
+
 	// Method to save a contribution to the form
 	function saveContribution() {
 		if (!$formData.open_source_contributions) {
 			$formData.open_source_contributions = [];
 		}
-		$formData.open_source_contributions = [
-			...$formData.open_source_contributions,
-			{
-				project_name: selectedContribution.project_name,
-				contribution_type: selectedContribution.contribution_type,
-				description: selectedContribution.description,
-				url: selectedContribution.url
-			}
-		];
+
+		const contributionData = {
+			project_name: selectedContribution.project_name,
+			contribution_type: selectedContribution.contribution_type,
+			description: selectedContribution.description,
+			url: selectedContribution.url
+		};
+
+		if (isEditMode && editIndex >= 0) {
+			// Update existing contribution
+			$formData.open_source_contributions = $formData.open_source_contributions.map((contribution: OpenSourceContribution, i: number) => {
+				if (i === editIndex) {
+					return contributionData;
+				}
+				return contribution;
+			});
+		} else {
+			// Add new contribution
+			$formData.open_source_contributions = [
+				...$formData.open_source_contributions,
+				contributionData
+			];
+		}
+
+		// Reset state
+		isEditMode = false;
+		editIndex = -1;
 	}
 </script>
 
@@ -68,8 +124,26 @@
 	<Accordion.Content>
 		{#if $formData.open_source_contributions && $formData.open_source_contributions.length > 0}
 			<div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-				{#each $formData.open_source_contributions as contribution}
-					<Card.Root>
+				{#each $formData.open_source_contributions as contribution, i}
+					<Card.Root class="relative">
+						<div class="absolute right-2 top-2 flex gap-1 z-10">
+							<Button 
+								variant="ghost" 
+								size="icon" 
+								class="h-8 w-8" 
+								onclick={() => startEditMode(i)}
+							>
+								<Pencil class="h-4 w-4" />
+							</Button>
+							<Button 
+								variant="ghost" 
+								size="icon" 
+								class="h-8 w-8" 
+								onclick={() => deleteContribution(i)}
+							>
+								<Trash2 class="h-4 w-4" />
+							</Button>
+						</div>
 						<Card.Header>
 							<Card.Title>{contribution.project_name}</Card.Title>
 							{#if contribution.contribution_type}
@@ -93,16 +167,16 @@
 			<p class="text-sm text-muted-foreground">No open source contributions added.</p>
 		{/if}
 
-		<Sheet.Root>
+		<Sheet.Root bind:open={sheetOpen}>
 			<Sheet.Trigger
 				type="button"
 				class={buttonVariants({ variant: 'outline' }) + ' mt-4 w-fit'}
-				onclick={resetSelectedContribution}>Add Contribution</Sheet.Trigger
+				onclick={startAddMode}>Add Contribution</Sheet.Trigger
 			>
 			<Sheet.Content side="right">
 				<Sheet.Header>
-					<Sheet.Title>Add Open Source Contribution</Sheet.Title>
-					<Sheet.Description>Add details about your open source contributions.</Sheet.Description>
+					<Sheet.Title>{isEditMode ? 'Edit' : 'Add'} Open Source Contribution</Sheet.Title>
+					<Sheet.Description>{isEditMode ? 'Update' : 'Add'} details about your open source contribution.</Sheet.Description>
 				</Sheet.Header>
 				<div class="grid gap-4 py-4">
 					<div class="space-y-2">
@@ -134,9 +208,22 @@
 					</div>
 				</div>
 				<Sheet.Footer>
-					<Sheet.Close class={buttonVariants({ variant: 'outline' })} onclick={saveContribution}
-						>Save Contribution</Sheet.Close
-					>
+					<div class="flex w-full justify-between">
+						<Button 
+							variant="outline" 
+							onclick={() => {
+								sheetOpen = false;
+							}}
+						>
+							Cancel
+						</Button>
+						<Sheet.Close 
+							class={buttonVariants()} 
+							onclick={saveContribution}
+						>
+							{isEditMode ? 'Update' : 'Save'} Contribution
+						</Sheet.Close>
+					</div>
 				</Sheet.Footer>
 			</Sheet.Content>
 		</Sheet.Root>

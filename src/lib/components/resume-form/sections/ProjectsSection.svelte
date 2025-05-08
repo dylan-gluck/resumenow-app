@@ -10,6 +10,7 @@
 	import type { Infer } from 'sveltekit-superforms';
 	import type { Project } from '@/types/resume';
 	import * as Card from '@/components/ui/card';
+	import { Pencil, Trash2 } from 'lucide-svelte';
 
 	let {
 		form,
@@ -44,6 +45,11 @@
 		key_achievements: [...(newProject.key_achievements || [])]
 	});
 
+	// State for edit mode
+	let isEditMode = $state(false);
+	let editIndex = $state(-1);
+	let sheetOpen = $state(false);
+
 	// Method to reset the selected project
 	function resetSelectedProject() {
 		selectedProject = {
@@ -59,25 +65,80 @@
 		};
 	}
 
+	// Start add mode
+	function startAddMode() {
+		isEditMode = false;
+		editIndex = -1;
+		resetSelectedProject();
+		sheetOpen = true;
+	}
+
+	// Start edit mode
+	function startEditMode(index: number) {
+		isEditMode = true;
+		editIndex = index;
+		
+		// Clone the selected project to avoid direct mutation
+		const project = $formData.projects[index];
+		selectedProject = {
+			name: project.name,
+			description: project.description || '',
+			technologies: project.technologies ? [...project.technologies] : [''],
+			url: project.url || '',
+			github_url: project.github_url || '',
+			start_date: project.start_date || '',
+			end_date: project.end_date || '',
+			role: project.role || '',
+			key_achievements: project.key_achievements ? [...project.key_achievements] : ['']
+		};
+		
+		sheetOpen = true;
+	}
+
+	// Delete project
+	function deleteProject(index: number) {
+		if (!$formData.projects) return;
+		
+		$formData.projects = $formData.projects.filter((_: Project, i: number) => i !== index);
+	}
+
 	// Method to save a project to the form
 	function saveProject() {
 		if (!$formData.projects) {
 			$formData.projects = [];
 		}
-		$formData.projects = [
-			...$formData.projects,
-			{
-				name: selectedProject.name,
-				description: selectedProject.description,
-				technologies: [...(selectedProject.technologies || [])],
-				url: selectedProject.url,
-				github_url: selectedProject.github_url,
-				start_date: selectedProject.start_date,
-				end_date: selectedProject.end_date,
-				role: selectedProject.role,
-				key_achievements: [...(selectedProject.key_achievements || [])]
-			}
-		];
+
+		const projectData = {
+			name: selectedProject.name,
+			description: selectedProject.description,
+			technologies: [...(selectedProject.technologies || [])].filter(t => t.trim() !== ''),
+			url: selectedProject.url,
+			github_url: selectedProject.github_url,
+			start_date: selectedProject.start_date,
+			end_date: selectedProject.end_date,
+			role: selectedProject.role,
+			key_achievements: [...(selectedProject.key_achievements || [])].filter(a => a.trim() !== '')
+		};
+
+		if (isEditMode && editIndex >= 0) {
+			// Update existing project
+			$formData.projects = $formData.projects.map((project: Project, i: number) => {
+				if (i === editIndex) {
+					return projectData;
+				}
+				return project;
+			});
+		} else {
+			// Add new project
+			$formData.projects = [
+				...$formData.projects,
+				projectData
+			];
+		}
+
+		// Reset state
+		isEditMode = false;
+		editIndex = -1;
 	}
 </script>
 
@@ -88,8 +149,26 @@
 	<Accordion.Content>
 		{#if $formData.projects && $formData.projects.length > 0}
 			<div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-				{#each $formData.projects as project}
-					<Card.Root>
+				{#each $formData.projects as project, i}
+					<Card.Root class="relative">
+						<div class="absolute right-2 top-2 flex gap-1 z-10">
+							<Button 
+								variant="ghost" 
+								size="icon" 
+								class="h-8 w-8" 
+								onclick={() => startEditMode(i)}
+							>
+								<Pencil class="h-4 w-4" />
+							</Button>
+							<Button 
+								variant="ghost" 
+								size="icon" 
+								class="h-8 w-8" 
+								onclick={() => deleteProject(i)}
+							>
+								<Trash2 class="h-4 w-4" />
+							</Button>
+						</div>
 						<Card.Header>
 							<Card.Title>{project.name}</Card.Title>
 							{#if project.role}
@@ -150,16 +229,16 @@
 			<p class="text-sm text-muted-foreground">No projects added.</p>
 		{/if}
 
-		<Sheet.Root>
+		<Sheet.Root bind:open={sheetOpen}>
 			<Sheet.Trigger
 				type="button"
 				class={buttonVariants({ variant: 'outline' }) + ' mt-4 w-fit'}
-				onclick={resetSelectedProject}>Add Project</Sheet.Trigger
+				onclick={startAddMode}>Add Project</Sheet.Trigger
 			>
 			<Sheet.Content side="right">
 				<Sheet.Header>
-					<Sheet.Title>Add Project</Sheet.Title>
-					<Sheet.Description>Add details about your projects.</Sheet.Description>
+					<Sheet.Title>{isEditMode ? 'Edit' : 'Add'} Project</Sheet.Title>
+					<Sheet.Description>{isEditMode ? 'Update' : 'Add'} details about your project.</Sheet.Description>
 				</Sheet.Header>
 				<div class="grid gap-4 py-4">
 					<div class="space-y-2">
@@ -242,9 +321,22 @@
 					</div>
 				</div>
 				<Sheet.Footer>
-					<Sheet.Close class={buttonVariants({ variant: 'outline' })} onclick={saveProject}
-						>Save Project</Sheet.Close
-					>
+					<div class="flex w-full justify-between">
+						<Button 
+							variant="outline" 
+							onclick={() => {
+								sheetOpen = false;
+							}}
+						>
+							Cancel
+						</Button>
+						<Sheet.Close 
+							class={buttonVariants()} 
+							onclick={saveProject}
+						>
+							{isEditMode ? 'Update' : 'Save'} Project
+						</Sheet.Close>
+					</div>
 				</Sheet.Footer>
 			</Sheet.Content>
 		</Sheet.Root>
