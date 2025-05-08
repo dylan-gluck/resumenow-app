@@ -129,7 +129,6 @@ pnpm lint      # Run ESLint and Prettier checks
 
 ```
 app/
-├── scripts/             # Setup and utility scripts
 ├── src/
 │   ├── app.css          # Global CSS
 │   ├── app.html         # App template
