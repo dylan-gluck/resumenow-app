@@ -79,7 +79,7 @@
 	function deleteContribution(index: number) {
 		if (!$formData.open_source_contributions) return;
 		
-		$formData.open_source_contributions = $formData.open_source_contributions.filter((_, i) => i !== index);
+		$formData.open_source_contributions = $formData.open_source_contributions.filter((_: OpenSourceContribution, i: number) => i !== index);
 	}
 
 	// Method to save a contribution to the form
@@ -97,7 +97,7 @@
 
 		if (isEditMode && editIndex >= 0) {
 			// Update existing contribution
-			$formData.open_source_contributions = $formData.open_source_contributions.map((contribution, i) => {
+			$formData.open_source_contributions = $formData.open_source_contributions.map((contribution: OpenSourceContribution, i: number) => {
 				if (i === editIndex) {
 					return contributionData;
 				}

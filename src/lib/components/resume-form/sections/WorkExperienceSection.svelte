@@ -88,7 +88,7 @@
   function deleteWorkExperience(index: number) {
     if (!$formData.work_experience) return;
     
-    $formData.work_experience = $formData.work_experience.filter((_, i) => i !== index);
+    $formData.work_experience = $formData.work_experience.filter((_: WorkExperience, i: number) => i !== index);
   }
 
   // Method to save work experience to the form
@@ -109,7 +109,7 @@
 
     if (isEditMode && editIndex >= 0) {
       // Update existing work experience
-      $formData.work_experience = $formData.work_experience.map((experience, i) => {
+      $formData.work_experience = $formData.work_experience.map((experience: WorkExperience, i: number) => {
         if (i === editIndex) {
           return experienceData;
         }

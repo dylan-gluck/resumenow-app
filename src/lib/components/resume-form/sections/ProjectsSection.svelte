@@ -99,7 +99,7 @@
 	function deleteProject(index: number) {
 		if (!$formData.projects) return;
 		
-		$formData.projects = $formData.projects.filter((_, i) => i !== index);
+		$formData.projects = $formData.projects.filter((_: Project, i: number) => i !== index);
 	}
 
 	// Method to save a project to the form
@@ -122,7 +122,7 @@
 
 		if (isEditMode && editIndex >= 0) {
 			// Update existing project
-			$formData.projects = $formData.projects.map((project, i) => {
+			$formData.projects = $formData.projects.map((project: Project, i: number) => {
 				if (i === editIndex) {
 					return projectData;
 				}

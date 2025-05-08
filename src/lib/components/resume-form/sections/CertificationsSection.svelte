@@ -79,7 +79,7 @@
   function deleteCertification(index: number) {
     if (!$formData.certifications) return;
     
-    $formData.certifications = $formData.certifications.filter((_, i) => i !== index);
+    $formData.certifications = $formData.certifications.filter((_: Certification, i: number) => i !== index);
   }
 
   // Method to save a certification to the form
@@ -98,7 +98,7 @@
 
     if (isEditMode && editIndex >= 0) {
       // Update existing certification
-      $formData.certifications = $formData.certifications.map((certification, i) => {
+      $formData.certifications = $formData.certifications.map((certification: Certification, i: number) => {
         if (i === editIndex) {
           return certificationData;
         }

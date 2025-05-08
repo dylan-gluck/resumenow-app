@@ -87,7 +87,7 @@
   function deleteEducation(index: number) {
     if (!$formData.education) return;
     
-    $formData.education = $formData.education.filter((_, i) => i !== index);
+    $formData.education = $formData.education.filter((_: Education, i: number) => i !== index);
   }
 
   // Method to save education to the form
@@ -108,7 +108,7 @@
 
     if (isEditMode && editIndex >= 0) {
       // Update existing education
-      $formData.education = $formData.education.map((education, i) => {
+      $formData.education = $formData.education.map((education: Education, i: number) => {
         if (i === editIndex) {
           return educationData;
         }
