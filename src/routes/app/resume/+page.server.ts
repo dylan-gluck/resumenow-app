@@ -23,9 +23,11 @@ export const load: PageServerLoad = async ({ locals: { user, supabase } }) => {
 
 	// @ts-ignore
 	const resume = profile.resume as Resume;
+	const form = await superValidate(resume, zod(formSchema));
 
 	return {
-		form: await superValidate(resume, zod(formSchema))
+		resume,
+		form
 	};
 };
 

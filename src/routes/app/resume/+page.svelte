@@ -2,8 +2,12 @@
 	import type { Resume } from '@/types/resume';
 	import type { PageData } from './$types';
 	import ResumeForm from '@/components/resume-form/ResumeForm.svelte';
+	import { Button } from '@/components/ui/button';
+	import { generateResumeDoc } from '@/docx/resume/resume';
 
 	let { data }: { data: PageData } = $props();
+
+	let resume = $derived(data.resume);
 
 	let isImporting: boolean = $state(false);
 	let resumeImport: Resume | undefined = $state(undefined);
@@ -21,6 +25,12 @@
 				Contact info, education history, work experience, skills, and certifications. This info will
 				be used to generate a custom resume for each position you apply for.
 			</p>
+			<Button
+				type="button"
+				onclick={() => {
+					generateResumeDoc(resume);
+				}}>Download Docx</Button
+			>
 		</div>
 	</div>
 	<div class="mx-auto max-w-[1200px] px-4 py-12 sm:px-6 lg:px-8">
