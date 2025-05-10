@@ -11,6 +11,7 @@
 	import type { Project } from '@/types/resume';
 	import * as Card from '@/components/ui/card';
 	import { Pencil, Trash2 } from 'lucide-svelte';
+	import { ScrollArea } from '@/components/ui/scroll-area';
 
 	let {
 		form,
@@ -77,7 +78,7 @@
 	function startEditMode(index: number) {
 		isEditMode = true;
 		editIndex = index;
-		
+
 		// Clone the selected project to avoid direct mutation
 		const project = $formData.projects[index];
 		selectedProject = {
@@ -91,14 +92,14 @@
 			role: project.role || '',
 			key_achievements: project.key_achievements ? [...project.key_achievements] : ['']
 		};
-		
+
 		sheetOpen = true;
 	}
 
 	// Delete project
 	function deleteProject(index: number) {
 		if (!$formData.projects) return;
-		
+
 		$formData.projects = $formData.projects.filter((_: Project, i: number) => i !== index);
 	}
 
@@ -111,13 +112,13 @@
 		const projectData = {
 			name: selectedProject.name,
 			description: selectedProject.description,
-			technologies: [...(selectedProject.technologies || [])].filter(t => t.trim() !== ''),
+			technologies: [...(selectedProject.technologies || [])].filter((t) => t.trim() !== ''),
 			url: selectedProject.url,
 			github_url: selectedProject.github_url,
 			start_date: selectedProject.start_date,
 			end_date: selectedProject.end_date,
 			role: selectedProject.role,
-			key_achievements: [...(selectedProject.key_achievements || [])].filter(a => a.trim() !== '')
+			key_achievements: [...(selectedProject.key_achievements || [])].filter((a) => a.trim() !== '')
 		};
 
 		if (isEditMode && editIndex >= 0) {
@@ -130,10 +131,7 @@
 			});
 		} else {
 			// Add new project
-			$formData.projects = [
-				...$formData.projects,
-				projectData
-			];
+			$formData.projects = [...$formData.projects, projectData];
 		}
 
 		// Reset state
@@ -148,24 +146,14 @@
 	</Accordion.Trigger>
 	<Accordion.Content>
 		{#if $formData.projects && $formData.projects.length > 0}
-			<div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+			<div class="grid grid-cols-1 gap-4 md:grid-cols-2">
 				{#each $formData.projects as project, i}
 					<Card.Root class="relative">
-						<div class="absolute right-2 top-2 flex gap-1 z-10">
-							<Button 
-								variant="ghost" 
-								size="icon" 
-								class="h-8 w-8" 
-								onclick={() => startEditMode(i)}
-							>
+						<div class="absolute right-2 top-2 z-10 flex gap-1">
+							<Button variant="ghost" size="icon" class="h-8 w-8" onclick={() => startEditMode(i)}>
 								<Pencil class="h-4 w-4" />
 							</Button>
-							<Button 
-								variant="ghost" 
-								size="icon" 
-								class="h-8 w-8" 
-								onclick={() => deleteProject(i)}
-							>
+							<Button variant="ghost" size="icon" class="h-8 w-8" onclick={() => deleteProject(i)}>
 								<Trash2 class="h-4 w-4" />
 							</Button>
 						</div>
@@ -238,102 +226,106 @@
 			<Sheet.Content side="right">
 				<Sheet.Header>
 					<Sheet.Title>{isEditMode ? 'Edit' : 'Add'} Project</Sheet.Title>
-					<Sheet.Description>{isEditMode ? 'Update' : 'Add'} details about your project.</Sheet.Description>
+					<Sheet.Description
+						>{isEditMode ? 'Update' : 'Add'} details about your project.</Sheet.Description
+					>
 				</Sheet.Header>
-				<div class="grid gap-4 py-4">
-					<div class="space-y-2">
-						<Label for="name" class="text-right">Project Name</Label>
-						<Input id="name" bind:value={selectedProject.name} />
-					</div>
-
-					<div class="space-y-2">
-						<Label for="role" class="text-right">Your Role</Label>
-						<Input id="role" bind:value={selectedProject.role} />
-					</div>
-
-					<div class="space-y-2">
-						<Label for="description" class="text-right">Description</Label>
-						<Textarea id="description" bind:value={selectedProject.description} />
-					</div>
-
-					<div class="grid grid-cols-2 gap-4">
+				<ScrollArea class="flex-1">
+					<div class="grid gap-4 py-4">
 						<div class="space-y-2">
-							<Label for="start_date" class="text-right">Start Date</Label>
-							<Input id="start_date" bind:value={selectedProject.start_date} />
+							<Label for="name" class="text-right">Project Name</Label>
+							<Input id="name" bind:value={selectedProject.name} />
 						</div>
-						<div class="space-y-2">
-							<Label for="end_date" class="text-right">End Date</Label>
-							<Input id="end_date" bind:value={selectedProject.end_date} />
-						</div>
-					</div>
 
-					<div class="grid grid-cols-2 gap-4">
 						<div class="space-y-2">
-							<Label for="url" class="text-right">Live URL</Label>
-							<Input id="url" bind:value={selectedProject.url} />
+							<Label for="role" class="text-right">Your Role</Label>
+							<Input id="role" bind:value={selectedProject.role} />
 						</div>
-						<div class="space-y-2">
-							<Label for="github_url" class="text-right">GitHub URL</Label>
-							<Input id="github_url" bind:value={selectedProject.github_url} />
-						</div>
-					</div>
 
-					<div class="space-y-2">
-						<Label class="text-right">Technologies Used</Label>
-						{#each selectedProject.technologies as tech, i}
-							<div class="flex items-center gap-2">
-								<Input
-									bind:value={selectedProject.technologies[i]}
-									placeholder={`Technology ${i + 1}`}
-								/>
-								{#if i === selectedProject.technologies.length - 1}
-									<Button
-										variant="outline"
-										size="sm"
-										onclick={() => {
-											selectedProject.technologies = [...selectedProject.technologies, ''];
-										}}>+</Button
-									>
-								{/if}
+						<div class="space-y-2">
+							<Label for="description" class="text-right">Description</Label>
+							<Textarea id="description" bind:value={selectedProject.description} />
+						</div>
+
+						<div class="grid grid-cols-2 gap-4">
+							<div class="space-y-2">
+								<Label for="start_date" class="text-right">Start Date</Label>
+								<Input id="start_date" bind:value={selectedProject.start_date} />
 							</div>
-						{/each}
-					</div>
-
-					<div class="space-y-2">
-						<Label class="text-right">Key Achievements</Label>
-						{#each selectedProject.key_achievements as achievement, i}
-							<div class="flex items-center gap-2">
-								<Input
-									bind:value={selectedProject.key_achievements[i]}
-									placeholder={`Achievement ${i + 1}`}
-								/>
-								{#if i === selectedProject.key_achievements.length - 1}
-									<Button
-										variant="outline"
-										size="sm"
-										onclick={() => {
-											selectedProject.key_achievements = [...selectedProject.key_achievements, ''];
-										}}>+</Button
-									>
-								{/if}
+							<div class="space-y-2">
+								<Label for="end_date" class="text-right">End Date</Label>
+								<Input id="end_date" bind:value={selectedProject.end_date} />
 							</div>
-						{/each}
+						</div>
+
+						<div class="grid grid-cols-2 gap-4">
+							<div class="space-y-2">
+								<Label for="url" class="text-right">Live URL</Label>
+								<Input id="url" bind:value={selectedProject.url} />
+							</div>
+							<div class="space-y-2">
+								<Label for="github_url" class="text-right">GitHub URL</Label>
+								<Input id="github_url" bind:value={selectedProject.github_url} />
+							</div>
+						</div>
+
+						<div class="space-y-2">
+							<Label class="text-right">Technologies Used</Label>
+							{#each selectedProject.technologies as tech, i}
+								<div class="flex items-center gap-2">
+									<Input
+										bind:value={selectedProject.technologies[i]}
+										placeholder={`Technology ${i + 1}`}
+									/>
+									{#if i === selectedProject.technologies.length - 1}
+										<Button
+											variant="outline"
+											size="sm"
+											onclick={() => {
+												selectedProject.technologies = [...selectedProject.technologies, ''];
+											}}>+</Button
+										>
+									{/if}
+								</div>
+							{/each}
+						</div>
+
+						<div class="space-y-2">
+							<Label class="text-right">Key Achievements</Label>
+							{#each selectedProject.key_achievements as achievement, i}
+								<div class="flex items-center gap-2">
+									<Input
+										bind:value={selectedProject.key_achievements[i]}
+										placeholder={`Achievement ${i + 1}`}
+									/>
+									{#if i === selectedProject.key_achievements.length - 1}
+										<Button
+											variant="outline"
+											size="sm"
+											onclick={() => {
+												selectedProject.key_achievements = [
+													...selectedProject.key_achievements,
+													''
+												];
+											}}>+</Button
+										>
+									{/if}
+								</div>
+							{/each}
+						</div>
 					</div>
-				</div>
+				</ScrollArea>
 				<Sheet.Footer>
-					<div class="flex w-full justify-between">
-						<Button 
-							variant="outline" 
+					<div class="flex w-full justify-end gap-2">
+						<Button
+							variant="outline"
 							onclick={() => {
 								sheetOpen = false;
 							}}
 						>
 							Cancel
 						</Button>
-						<Sheet.Close 
-							class={buttonVariants()} 
-							onclick={saveProject}
-						>
+						<Sheet.Close class={buttonVariants()} onclick={saveProject}>
 							{isEditMode ? 'Update' : 'Save'} Project
 						</Sheet.Close>
 					</div>
